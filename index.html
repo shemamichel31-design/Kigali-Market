@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kigali Market - Manual Price</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#080808;color:#fff;font-family:sans-serif;padding:15px}
+.card{max-width:480px;margin:auto;background:#111;border:1px solid #333;border-radius:20px;overflow:hidden}
+img{width:100%;height:280px;object-fit:cover}
+.box{padding:20px}
+.price{color:#00ff88;font-size:36px;font-weight:900}
+.old{color:#555;text-decoration:line-through;margin-left:8px}
+.btn{width:100%;padding:16px;border-radius:12px;border:none;font-weight:900;margin-top:10px}
+.buy{background:#00ff88;color:#000;font-size:18px}
+.edit{background:transparent;color:#888;border:1px dashed #444!important}
+.save{background:#00ff88;color:#000;margin-top:10px}
+.admin{display:none;background:#1a1a1a;border:2px solid #00ff88;border-radius:15px;padding:15px;margin-top:15px}
+input{width:100%;padding:12px;margin:6px 0;background:#000;color:#fff;border:1px solid #333;border-radius:8px}
+</style>
+</head>
+<body>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=600">
+<div class="box">
+<h2 id="name">White Hoverboard 6.5"</h2>
+<p style="color:#888">LED + Bluetooth • 15KM • Kigali</p>
+<div style="margin:15px 0">
+<span id="price" class="price">RWF 450,000</span><span class="old">RWF 600,000</span>
+<p id="stock" style="color:#aaa;margin-top:6px">📍 12 left • FREE Delivery</p>
+</div>
+<button class="btn buy" onclick="alert('Order: '+document.getElementById('name').innerText+' - '+document.getElementById('price').innerText)">🛒 BUY NOW</button>
+<button class="btn edit" onclick="document.getElementById('panel').style.display='block'">🔧 HINDURA IGICIRO MANUALLY</button>
+<div id="panel" class="admin">
+<h3 style="color:#00ff88">🔧 Admin Panel - Hindura Manual</h3>
+Igiciro gishya:<input id="newPrice" type="number" value="450000">
+Stock:<input id="newStock" type="number" value="12">
+<button class="btn save" onclick="let p=document.getElementById('newPrice').value;let s=document.getElementById('newStock').value;document.getElementById('price').innerText='RWF '+Number(p).toLocaleString();document.getElementById('stock').innerText='📍 '+s+' left • FREE Delivery';localStorage.setItem('price',p);localStorage.setItem('stock',s);alert('✅ Byahinduwe! Igiciro: RWF '+Number(p).toLocaleString());document.getElementById('panel').style.display='none'">💾 Bika Impinduka</button>
+</div>
+</div>
+</div>
+</body>
+</html>
