@@ -6,32 +6,181 @@
 <title>Kigali-Market</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0a0a;color:#fff;font-family:Arial;padding:12px}
-.card{max-width:460px;margin:20px auto;background:#151515;border-radius:24px;overflow:hidden;border:1px solid #222}
-.img-wrap{background:#fff;padding:15px;display:flex;justify-content:center;height:520px}
-.img-wrap img{max-width:100%;max-height:100%;object-fit:contain}
-.box{padding:22px}
-.price{color:#00ff88;font-size:38px;font-weight:900}
-.old{color:#555;text-decoration:line-through;margin-left:8px;font-size:16px}
-.btn{width:100%;padding:16px;border-radius:14px;font-weight:900;border:none;margin-top:10px}
-.buy{background:#00ff88;color:#000}
-.edit{background:transparent;color:#666;border:1px dashed #333;font-size:12px}
-.specs{background:#1e1e1e;border-radius:14px;padding:12px;margin:14px 0;font-size:13px;color:#aaa;line-height:1.6}
+body{background:#0a0a0a;color:#fff;font-family:Arial;padding:12px;padding-bottom:100px}
+header{max-width:1000px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:12px 4px}
+.logo{font-size:23px;font-weight:900}.logo span{color:#00ff88}
+.topbtns{display:flex;gap:8px}
+.btn{border:none;padding:10px 14px;border-radius:20px;font-weight:900;cursor:pointer}
+.btn-green{background:#00ff88;color:#000}.btn-white{background:#fff;color:#000}
+.search{max-width:1000px;margin:10px auto}
+.search input{width:100%;padding:14px;border-radius:14px;border:1px solid #333;background:#1a1a1a;color:#fff;font-size:16px;outline:none}
+.grid{max-width:1000px;margin:14px auto;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.grid{grid-template-columns:1fr 1fr}}
+.card{background:#151515;border-radius:20px;overflow:hidden;border:1px solid #222;position:relative}
+.card .media{height:190px;background:#fff;position:relative;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.card .media img,.card .media video{width:100%;height:100%;object-fit:cover}
+.play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:55px;background:rgba(0,0,0,.35)}
+.vbadge{position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;font-size:11px;padding:4px 8px;border-radius:10px;font-weight:900}
+.pad{padding:14px}.pad h3{font-size:15px;min-height:40px;line-height:1.3}
+.price{color:#00ff88;font-size:19px;font-weight:900}.old{color:#666;text-decoration:line-through;font-size:12px;margin-left:6px}
+.desc{color:#888;font-size:12px;margin:6px 0;min-height:30px}
+.add{width:100%;padding:11px;border:none;border-radius:10px;background:#00ff88;color:#000;font-weight:900;cursor:pointer;margin-top:6px}
+.wa{width:100%;padding:11px;border:none;border-radius:10px;background:#25D366;color:#fff;font-weight:900;cursor:pointer;margin-top:6px}
+.del{position:absolute;top:8px;right:8px;background:#ff4444;color:#fff;border:none;width:28px;height:28px;border-radius:50%;cursor:pointer;z-index:2}
+/* MODAL */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.95);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
+.modal.open{display:flex}
+.modal-box{width:100%;max-width:500px;background:#151515;border-radius:20px;overflow:hidden;max-height:90vh;overflow-y:auto}
+.modal-box img,.modal-box video{width:100%;max-height:380px;object-fit:contain;background:#000}
+.modal-pad{padding:18px}
+.close{position:fixed;top:14px;right:16px;background:#fff;color:#000;border:none;width:38px;height:38px;border-radius:50%;font-size:20px;cursor:pointer;z-index:101}
+/* ADMIN FORM */
+.admin{max-width:1000px;margin:0 auto;background:#1a1a1a;border:2px dashed #00ff88;border-radius:20px;padding:18px;display:none}
+.admin.open{display:block}
+.admin h2{margin-bottom:12px}
+.admin label{font-size:13px;color:#aaa;display:block;margin-top:12px}
+.admin input,.admin textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #333;background:#0a0a0a;color:#fff;margin-top:5px;font-size:15px}
+.admin .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.preview{width:100%;height:160px;background:#000;border-radius:12px;margin-top:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;color:#666}
+.preview img,.preview video{width:100%;height:100%;object-fit:cover}
 </style>
 </head>
 <body>
-<div class="card">
-<div class="img-wrap">
-<img src="hoverboard.jpg" alt="Hoverboard">
+
+<header>
+<div class="logo">KIGALI<span>-MARKET</span></div>
+<div class="topbtns">
+<button class="btn btn-white" onclick="toggleAdmin()">+ Ongeraho</button>
+<button class="btn btn-green" onclick="showCart()">🛒 (<span id="count">0</span>)</button>
 </div>
-<div class="box">
-<h1>🔥 Hoverboard 6.5" Blue Flame</h1>
-<p style="color:#888;font-size:13px;margin:8px 0">Blue Fire + Spider Grip + LED</p>
-<div><span class="price" id="price">RWF 450,000</span><span class="old">RWF 600,000</span></div>
-<div class="specs">✅ 10KM Range • 100KG Max • Self-Balancing<br>✅ Bluetooth Speaker • 6 Months Warranty<br>📍 FREE Delivery Kigali</div>
-<button class="btn buy" onclick="window.open('https://wa.me/250788000000?text=Ndifuza Hoverboard Blue Flame '+document.getElementById('price').innerText,'_blank')">🛒 BUY NOW - WhatsApp</button>
-<button class="btn edit" onclick="let p=prompt('Igiciro gishya:'); if(p)document.getElementById('price').innerText=p">✏️ Hindura Igiciro (Manual Price)</button>
+</header>
+
+<!-- FORM YO KONGERAHO IBICURUZWA MANUALLY -->
+<div class="admin" id="adminForm">
+<h2>➕ Ongeraho Igicuruzwa Gishya</h2>
+<label>Izina ry'igicuruzwa *</label>
+<input id="fName" placeholder="Ex: Hoverboard Blue Flame">
+<div class="row">
+<div><label>Igiciro gishya (RWF) *</label><input id="fPrice" type="number" placeholder="450000"></div>
+<div><label>Igiciro cya kera</label><input id="fOld" type="number" placeholder="600000"></div>
+</div>
+<label>Ibisobanuro</label>
+<textarea id="fDesc" rows="2" placeholder="Ex: 6.5 inch, LED, Bluetooth, Free Delivery Kigali..."></textarea>
+
+<label>📸 FOTO y'igicuruzwa (hitamo muri gallery)</label>
+<input type="file" id="fPhoto" accept="image/*" onchange="previewFile(this,'photoPrev')">
+<div class="preview" id="photoPrev">Nta foto</div>
+
+<label>🎥 VIDEO isobanura igicuruzwa (hitamo muri gallery)</label>
+<input type="file" id="fVideo" accept="video/*" onchange="previewFile(this,'videoPrev')">
+<div class="preview" id="videoPrev">Nta video</div>
+
+<label>🔗 CYANGWA shyiramo YouTube Link (niba video iri kuri YouTube)</label>
+<input id="fYoutube" placeholder="Ex: https://youtube.com/watch?v=...">
+
+<button class="btn btn-green" style="width:100%;padding:14px;margin-top:16px;font-size:16px" onclick="saveProduct()">✅ Bika Igicuruzwa</button>
+<button class="btn" style="width:100%;padding:12px;margin-top:8px;background:#333;color:#fff" onclick="toggleAdmin()">Funga</button>
+</div>
+
+<div class="search"><input id="search" oninput="filter()" placeholder="🔍 Shaka igicuruzwa..."></div>
+
+<div class="grid" id="grid"></div>
+
+<!-- MODAL YO KUREBA FOTO + VIDEO -->
+<div class="modal" id="modal">
+<button class="close" onclick="closeModal()">✕</button>
+<div class="modal-box">
+<div id="modalMedia"></div>
+<div class="modal-pad">
+<h2 id="modalName"></h2>
+<div style="margin:8px 0"><span class="price" id="modalPrice"></span> <span class="old" id="modalOld"></span></div>
+<p id="modalDesc" style="color:#aaa;font-size:14px;line-height:1.5"></p>
+<button class="add" style="margin-top:14px" onclick="addFromModal()">+ Add to Cart</button>
+<button class="wa" onclick="buyFromModal()">Buy via WhatsApp</button>
 </div>
 </div>
+</div>
+
+<script>
+let products = JSON.parse(localStorage.getItem('km_products')||'[]');
+let cart = [];
+let current = null;
+let tempPhoto = '', tempVideo = '';
+
+// Ibicuruzwa bya mbere - niba nta na kimwe
+if(products.length===0){
+products=[{name:'Hoverboard 6.5" Blue Flame + LED',price:450000,old:600000,desc:'Blue Fire + LED + Bluetooth. Free Delivery Kigali. 6 Months Warranty.',photo:'hoverboard.jpg',video:'',youtube:''}];
+saveLocal();
+}
+function saveLocal(){localStorage.setItem('km_products',JSON.stringify(products))}
+function toggleAdmin(){document.getElementById('adminForm').classList.toggle('open');window.scrollTo({top:0,behavior:'smooth'})}
+function previewFile(input,prevId){
+let file=input.files[0]; if(!file) return;
+let r=new FileReader();
+r.onload=e=>{
+let box=document.getElementById(prevId);
+if(file.type.startsWith('image/')){tempPhoto=e.target.result; box.innerHTML='<img src="'+e.target.result+'">'}
+else{tempVideo=e.target.result; box.innerHTML='<video src="'+e.target.result+'" controls></video>'}
+};
+r.readAsDataURL(file);
+}
+function saveProduct(){
+let name=document.getElementById('fName').value.trim();
+let price=Number(document.getElementById('fPrice').value);
+if(!name||!price){alert('Shyiramo izina n\'igiciro!');return}
+let p={name,price,old:Number(document.getElementById('fOld').value)||0,desc:document.getElementById('fDesc').value,photo:tempPhoto||'https://via.placeholder.com/400?text='+encodeURIComponent(name),video:tempVideo,youtube:document.getElementById('fYoutube').value};
+products.unshift(p); saveLocal(); render();
+document.getElementById('fName').value='';document.getElementById('fPrice').value='';document.getElementById('fOld').value='';document.getElementById('fDesc').value='';document.getElementById('fYoutube').value='';tempPhoto='';tempVideo='';document.getElementById('photoPrev').innerHTML='Nta foto';document.getElementById('videoPrev').innerHTML='Nta video';
+toggleAdmin(); alert('Igicuruzwa cyongewe! ✅');
+}
+function getYoutubeId(url){
+let m=url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([^&?]+)/); return m?m[1]:'';
+}
+function render(){
+let grid=document.getElementById('grid');
+grid.innerHTML=products.map((p,i)=>{
+let media = p.video ? '<video src="'+p.video+'" muted playsinline></video>' : '<img src="'+p.photo+'">';
+let badge = (p.video||p.youtube) ? '<div class="vbadge">▶ VIDEO</div>' : '';
+return '<div class="card" data-name="'+p.name.toLowerCase()+'">'
++'<button class="del" onclick="delProduct(event,'+i+')">✕</button>'
++'<div class="media" onclick="openModal('+i+')">'+media+badge+'<div class="play">▶</div></div>'
++'<div class="pad"><h3>'+p.name+'</h3><div><span class="price">'+p.price.toLocaleString()+' RWF</span>'+(p.old?'<span class="old">'+p.old.toLocaleString()+'</span>':'')+'</div><p class="desc">'+(p.desc||'')+'</p><button class="add" onclick="add(\''+p.name.replace(/'/g,"")+'\','+p.price+')">+ Add to Cart</button><button class="wa" onclick="buy(\''+p.name.replace(/'/g,"")+'\')">Buy via WhatsApp</button></div></div>'
+}).join('');
+}
+function openModal(i){
+current=products[i];
+let m=document.getElementById('modal'); m.classList.add('open');
+let mediaHtml='';
+if(current.youtube && getYoutubeId(current.youtube)){
+mediaHtml='<iframe width="100%" height="300" src="https://www.youtube.com/embed/'+getYoutubeId(current.youtube)+'?autoplay=1" frameborder="0" allowfullscreen></iframe>';
+}else if(current.video){
+mediaHtml='<video src="'+current.video+'" controls autoplay></video>';
+}else{
+mediaHtml='<img src="'+current.photo+'">';
+}
+document.getElementById('modalMedia').innerHTML=mediaHtml;
+document.getElementById('modalName').innerText=current.name;
+document.getElementById('modalPrice').innerText=current.price.toLocaleString()+' RWF';
+document.getElementById('modalOld').innerText=current.old?current.old.toLocaleString():'';
+document.getElementById('modalDesc').innerText=current.desc||'';
+}
+function closeModal(){document.getElementById('modal').classList.remove('open');document.getElementById('modalMedia').innerHTML=''}
+function delProduct(e,i){e.stopPropagation(); if(confirm('Gusiba '+products[i].name+'?')){products.splice(i,1);saveLocal();render()}}
+function add(name,price){cart.push({name,price});document.getElementById('count').innerText=cart.length;alert(name+' yongewe ✅')}
+function buy(name){window.open('https://wa.me/250788000000?text='+encodeURIComponent('Mwiriwe! Ndifuza '+name),'_blank')}
+function addFromModal(){if(current)add(current.name,current.price)}
+function buyFromModal(){if(current)buy(current.name)}
+function showCart(){
+if(!cart.length){alert('Cart irimo ubusa');return}
+let total=cart.reduce((s,i)=>s+i.price,0);
+let list=cart.map(i=>i.name+' - '+i.price.toLocaleString()).join('\n');
+if(confirm(list+'\n\nTOTAL: '+total.toLocaleString()+' RWF\n\nKohereza kuri WhatsApp?')) window.open('https://wa.me/250788000000?text='+encodeURIComponent('ORDER:\n'+list+'\nTOTAL: '+total),'_blank');
+}
+function filter(){
+let q=document.getElementById('search').value.toLowerCase();
+document.querySelectorAll('.card').forEach(c=>{c.style.display=c.dataset.name.includes(q)?'block':'none'})
+}
+render();
+</script>
 </body>
 </html>
