@@ -3,184 +3,100 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kigali-Market</title>
+<title>KIGALI-MARKET - Gura Hano</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0a0a;color:#fff;font-family:Arial;padding:12px;padding-bottom:100px}
-header{max-width:1000px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:12px 4px}
-.logo{font-size:23px;font-weight:900}.logo span{color:#00ff88}
-.topbtns{display:flex;gap:8px}
-.btn{border:none;padding:10px 14px;border-radius:20px;font-weight:900;cursor:pointer}
-.btn-green{background:#00ff88;color:#000}.btn-white{background:#fff;color:#000}
-.search{max-width:1000px;margin:10px auto}
-.search input{width:100%;padding:14px;border-radius:14px;border:1px solid #333;background:#1a1a1a;color:#fff;font-size:16px;outline:none}
-.grid{max-width:1000px;margin:14px auto;display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:600px){.grid{grid-template-columns:1fr 1fr}}
-.card{background:#151515;border-radius:20px;overflow:hidden;border:1px solid #222;position:relative}
-.card .media{height:190px;background:#fff;position:relative;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.card .media img,.card .media video{width:100%;height:100%;object-fit:cover}
-.play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:55px;background:rgba(0,0,0,.35)}
-.vbadge{position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;font-size:11px;padding:4px 8px;border-radius:10px;font-weight:900}
-.pad{padding:14px}.pad h3{font-size:15px;min-height:40px;line-height:1.3}
-.price{color:#00ff88;font-size:19px;font-weight:900}.old{color:#666;text-decoration:line-through;font-size:12px;margin-left:6px}
-.desc{color:#888;font-size:12px;margin:6px 0;min-height:30px}
-.add{width:100%;padding:11px;border:none;border-radius:10px;background:#00ff88;color:#000;font-weight:900;cursor:pointer;margin-top:6px}
-.wa{width:100%;padding:11px;border:none;border-radius:10px;background:#25D366;color:#fff;font-weight:900;cursor:pointer;margin-top:6px}
-.del{position:absolute;top:8px;right:8px;background:#ff4444;color:#fff;border:none;width:28px;height:28px;border-radius:50%;cursor:pointer;z-index:2}
-/* MODAL */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.95);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
-.modal.open{display:flex}
-.modal-box{width:100%;max-width:500px;background:#151515;border-radius:20px;overflow:hidden;max-height:90vh;overflow-y:auto}
-.modal-box img,.modal-box video{width:100%;max-height:380px;object-fit:contain;background:#000}
-.modal-pad{padding:18px}
-.close{position:fixed;top:14px;right:16px;background:#fff;color:#000;border:none;width:38px;height:38px;border-radius:50%;font-size:20px;cursor:pointer;z-index:101}
-/* ADMIN FORM */
-.admin{max-width:1000px;margin:0 auto;background:#1a1a1a;border:2px dashed #00ff88;border-radius:20px;padding:18px;display:none}
-.admin.open{display:block}
-.admin h2{margin-bottom:12px}
-.admin label{font-size:13px;color:#aaa;display:block;margin-top:12px}
-.admin input,.admin textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #333;background:#0a0a0a;color:#fff;margin-top:5px;font-size:15px}
-.admin .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.preview{width:100%;height:160px;background:#000;border-radius:12px;margin-top:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;color:#666}
-.preview img,.preview video{width:100%;height:100%;object-fit:cover}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#0f0f0f;color:white;padding:15px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+header h1{font-size:22px}
+header h1 span{color:#00e676}
+.btn{background:#00e676;color:#000;padding:8px 14px;border:none;border-radius:20px;font-weight:bold;cursor:pointer}
+.cart{background:#00e676;color:#000;padding:8px 14px;border-radius:20px;font-weight:bold}
+.search{width:100%;padding:12px;border-radius:10px;border:none;background:#222;color:white;margin-bottom:15px;font-size:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:500px){.grid{grid-template-columns:1fr}}
+.card{background:#1e1e1e;border-radius:15px;overflow:hidden;padding-bottom:12px}
+.card img{width:100%;height:220px;object-fit:cover;display:block;background:#333}
+.card .info{padding:12px}
+.card h3{font-size:16px;margin-bottom:5px}
+.price{color:#00e676;font-size:20px;font-weight:bold}
+.old{color:#888;text-decoration:line-through;font-size:13px;margin-left:5px}
+.desc{font-size:12px;color:#aaa;margin:6px 0}
+.add{width:100%;background:#00e676;color:#000;padding:10px;border:none;border-radius:10px;font-weight:bold;margin-top:8px;cursor:pointer}
+.wa{width:100%;background:#25D366;color:white;padding:10px;border:none;border-radius:10px;font-weight:bold;margin-top:6px;cursor:pointer;display:block;text-align:center;text-decoration:none}
 </style>
 </head>
 <body>
 
 <header>
-<div class="logo">KIGALI<span>-MARKET</span></div>
-<div class="topbtns">
-<button class="btn btn-white" onclick="toggleAdmin()">+ Ongeraho</button>
-<button class="btn btn-green" onclick="showCart()">🛒 (<span id="count">0</span>)</button>
-</div>
+<h1>KIGALI<span>-MARKET</span></h1>
+<div><button class="btn" onclick="alert('Ongeraho ibicuruzwa!')">+ Ongeraho</button> <span class="cart">🛒 (<span id="count">0</span>)</span></div>
 </header>
 
-<!-- FORM YO KONGERAHO IBICURUZWA MANUALLY -->
-<div class="admin" id="adminForm">
-<h2>➕ Ongeraho Igicuruzwa Gishya</h2>
-<label>Izina ry'igicuruzwa *</label>
-<input id="fName" placeholder="Ex: Hoverboard Blue Flame">
-<div class="row">
-<div><label>Igiciro gishya (RWF) *</label><input id="fPrice" type="number" placeholder="450000"></div>
-<div><label>Igiciro cya kera</label><input id="fOld" type="number" placeholder="600000"></div>
-</div>
-<label>Ibisobanuro</label>
-<textarea id="fDesc" rows="2" placeholder="Ex: 6.5 inch, LED, Bluetooth, Free Delivery Kigali..."></textarea>
+<input class="search" id="search" placeholder="🔍 Shaka igicuruzwa..." oninput="filter()">
 
-<label>📸 FOTO y'igicuruzwa (hitamo muri gallery)</label>
-<input type="file" id="fPhoto" accept="image/*" onchange="previewFile(this,'photoPrev')">
-<div class="preview" id="photoPrev">Nta foto</div>
+<div class="grid" id="grid">
 
-<label>🎥 VIDEO isobanura igicuruzwa (hitamo muri gallery)</label>
-<input type="file" id="fVideo" accept="video/*" onchange="previewFile(this,'videoPrev')">
-<div class="preview" id="videoPrev">Nta video</div>
-
-<label>🔗 CYANGWA shyiramo YouTube Link (niba video iri kuri YouTube)</label>
-<input id="fYoutube" placeholder="Ex: https://youtube.com/watch?v=...">
-
-<button class="btn btn-green" style="width:100%;padding:14px;margin-top:16px;font-size:16px" onclick="saveProduct()">✅ Bika Igicuruzwa</button>
-<button class="btn" style="width:100%;padding:12px;margin-top:8px;background:#333;color:#fff" onclick="toggleAdmin()">Funga</button>
-</div>
-
-<div class="search"><input id="search" oninput="filter()" placeholder="🔍 Shaka igicuruzwa..."></div>
-
-<div class="grid" id="grid"></div>
-
-<!-- MODAL YO KUREBA FOTO + VIDEO -->
-<div class="modal" id="modal">
-<button class="close" onclick="closeModal()">✕</button>
-<div class="modal-box">
-<div id="modalMedia"></div>
-<div class="modal-pad">
-<h2 id="modalName"></h2>
-<div style="margin:8px 0"><span class="price" id="modalPrice"></span> <span class="old" id="modalOld"></span></div>
-<p id="modalDesc" style="color:#aaa;font-size:14px;line-height:1.5"></p>
-<button class="add" style="margin-top:14px" onclick="addFromModal()">+ Add to Cart</button>
-<button class="wa" onclick="buyFromModal()">Buy via WhatsApp</button>
+<!-- HOVERBOARD - IFOTO YAKEMWE -->
+<div class="card" data-name="hoverboard">
+<img src="https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=600&q=80" alt="Hoverboard" onerror="this.src='https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=600&q=80'">
+<div class="info">
+<h3>Hoverboard 6.5" Blue Flame + LED</h3>
+<div><span class="price">450,000 RWF</span><span class="old">600,000</span></div>
+<p class="desc">Blue Fire + LED + Bluetooth. Free Delivery Kigali. 6 Months Warranty.</p>
+<button class="add" onclick="addCart()">+ Add to Cart</button>
+<a class="wa" href="https://wa.me/250734311635?text=Nshaka%20Hoverboard%206.5%20Blue%20Flame%20450%2C000%20RWF" target="_blank">Buy via WhatsApp</a>
 </div>
 </div>
+
+<!-- INKWETO -->
+<div class="card" data-name="inkweto shoes">
+<img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80" alt="Inkweto">
+<div class="info">
+<h3>Inkweto Nziza - Nike Style</h3>
+<div><span class="price">25,000 RWF</span><span class="old">35,000</span></div>
+<p class="desc">Inkweto nziza, zikomeye. Delivery muri Kigali.</p>
+<button class="add" onclick="addCart()">+ Add to Cart</button>
+<a class="wa" href="https://wa.me/250734311635?text=Nshaka%20Inkweto%2025%2C000%20RWF" target="_blank">Buy via WhatsApp</a>
+</div>
+</div>
+
+<!-- ISAHA -->
+<div class="card" data-name="isaha watch">
+<img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80" alt="Isaha">
+<div class="info">
+<h3>Isaha Nziza - Smart Watch</h3>
+<div><span class="price">30,000 RWF</span><span class="old">45,000</span></div>
+<p class="desc">Isaha igezweho, battery imara igihe. Free Delivery.</p>
+<button class="add" onclick="addCart()">+ Add to Cart</button>
+<a class="wa" href="https://wa.me/250734311635?text=Nshaka%20Isaha%2030%2C000%20RWF" target="_blank">Buy via WhatsApp</a>
+</div>
+</div>
+
+<!-- HEADPHONES -->
+<div class="card" data-name="headphones">
+<img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80" alt="Headphones">
+<div class="info">
+<h3>Headphones - Bass Nziza</h3>
+<div><span class="price">20,000 RWF</span><span class="old">28,000</span></div>
+<p class="desc">Amajwi meza cyane, Bluetooth. Warranty 3 Months.</p>
+<button class="add" onclick="addCart()">+ Add to Cart</button>
+<a class="wa" href="https://wa.me/250734311635?text=Nshaka%20Headphones%2020%2C000%20RWF" target="_blank">Buy via WhatsApp</a>
+</div>
+</div>
+
 </div>
 
 <script>
-let products = JSON.parse(localStorage.getItem('km_products')||'[]');
-let cart = [];
-let current = null;
-let tempPhoto = '', tempVideo = '';
-
-// Ibicuruzwa bya mbere - niba nta na kimwe
-if(products.length===0){
-products=[{name:'Hoverboard 6.5" Blue Flame + LED',price:450000,old:600000,desc:'Blue Fire + LED + Bluetooth. Free Delivery Kigali. 6 Months Warranty.',photo:'hoverboard.jpg',video:'',youtube:''}];
-saveLocal();
-}
-function saveLocal(){localStorage.setItem('km_products',JSON.stringify(products))}
-function toggleAdmin(){document.getElementById('adminForm').classList.toggle('open');window.scrollTo({top:0,behavior:'smooth'})}
-function previewFile(input,prevId){
-let file=input.files[0]; if(!file) return;
-let r=new FileReader();
-r.onload=e=>{
-let box=document.getElementById(prevId);
-if(file.type.startsWith('image/')){tempPhoto=e.target.result; box.innerHTML='<img src="'+e.target.result+'">'}
-else{tempVideo=e.target.result; box.innerHTML='<video src="'+e.target.result+'" controls></video>'}
-};
-r.readAsDataURL(file);
-}
-function saveProduct(){
-let name=document.getElementById('fName').value.trim();
-let price=Number(document.getElementById('fPrice').value);
-if(!name||!price){alert('Shyiramo izina n\'igiciro!');return}
-let p={name,price,old:Number(document.getElementById('fOld').value)||0,desc:document.getElementById('fDesc').value,photo:tempPhoto||'https://via.placeholder.com/400?text='+encodeURIComponent(name),video:tempVideo,youtube:document.getElementById('fYoutube').value};
-products.unshift(p); saveLocal(); render();
-document.getElementById('fName').value='';document.getElementById('fPrice').value='';document.getElementById('fOld').value='';document.getElementById('fDesc').value='';document.getElementById('fYoutube').value='';tempPhoto='';tempVideo='';document.getElementById('photoPrev').innerHTML='Nta foto';document.getElementById('videoPrev').innerHTML='Nta video';
-toggleAdmin(); alert('Igicuruzwa cyongewe! ✅');
-}
-function getYoutubeId(url){
-let m=url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([^&?]+)/); return m?m[1]:'';
-}
-function render(){
-let grid=document.getElementById('grid');
-grid.innerHTML=products.map((p,i)=>{
-let media = p.video ? '<video src="'+p.video+'" muted playsinline></video>' : '<img src="'+p.photo+'">';
-let badge = (p.video||p.youtube) ? '<div class="vbadge">▶ VIDEO</div>' : '';
-return '<div class="card" data-name="'+p.name.toLowerCase()+'">'
-+'<button class="del" onclick="delProduct(event,'+i+')">✕</button>'
-+'<div class="media" onclick="openModal('+i+')">'+media+badge+'<div class="play">▶</div></div>'
-+'<div class="pad"><h3>'+p.name+'</h3><div><span class="price">'+p.price.toLocaleString()+' RWF</span>'+(p.old?'<span class="old">'+p.old.toLocaleString()+'</span>':'')+'</div><p class="desc">'+(p.desc||'')+'</p><button class="add" onclick="add(\''+p.name.replace(/'/g,"")+'\','+p.price+')">+ Add to Cart</button><button class="wa" onclick="buy(\''+p.name.replace(/'/g,"")+'\')">Buy via WhatsApp</button></div></div>'
-}).join('');
-}
-function openModal(i){
-current=products[i];
-let m=document.getElementById('modal'); m.classList.add('open');
-let mediaHtml='';
-if(current.youtube && getYoutubeId(current.youtube)){
-mediaHtml='<iframe width="100%" height="300" src="https://www.youtube.com/embed/'+getYoutubeId(current.youtube)+'?autoplay=1" frameborder="0" allowfullscreen></iframe>';
-}else if(current.video){
-mediaHtml='<video src="'+current.video+'" controls autoplay></video>';
-}else{
-mediaHtml='<img src="'+current.photo+'">';
-}
-document.getElementById('modalMedia').innerHTML=mediaHtml;
-document.getElementById('modalName').innerText=current.name;
-document.getElementById('modalPrice').innerText=current.price.toLocaleString()+' RWF';
-document.getElementById('modalOld').innerText=current.old?current.old.toLocaleString():'';
-document.getElementById('modalDesc').innerText=current.desc||'';
-}
-function closeModal(){document.getElementById('modal').classList.remove('open');document.getElementById('modalMedia').innerHTML=''}
-function delProduct(e,i){e.stopPropagation(); if(confirm('Gusiba '+products[i].name+'?')){products.splice(i,1);saveLocal();render()}}
-function add(name,price){cart.push({name,price});document.getElementById('count').innerText=cart.length;alert(name+' yongewe ✅')}
-function buy(name){window.open('https://wa.me/250788000000?text='+encodeURIComponent('Mwiriwe! Ndifuza '+name),'_blank')}
-function addFromModal(){if(current)add(current.name,current.price)}
-function buyFromModal(){if(current)buy(current.name)}
-function showCart(){
-if(!cart.length){alert('Cart irimo ubusa');return}
-let total=cart.reduce((s,i)=>s+i.price,0);
-let list=cart.map(i=>i.name+' - '+i.price.toLocaleString()).join('\n');
-if(confirm(list+'\n\nTOTAL: '+total.toLocaleString()+' RWF\n\nKohereza kuri WhatsApp?')) window.open('https://wa.me/250788000000?text='+encodeURIComponent('ORDER:\n'+list+'\nTOTAL: '+total),'_blank');
-}
+let c=0;
+function addCart(){c++;document.getElementById('count').innerText=c;alert('Ongerewe muri Cart! 🛒');}
 function filter(){
-let q=document.getElementById('search').value.toLowerCase();
-document.querySelectorAll('.card').forEach(c=>{c.style.display=c.dataset.name.includes(q)?'block':'none'})
+let v=document.getElementById('search').value.toLowerCase();
+document.querySelectorAll('.card').forEach(card=>{
+card.style.display=card.getAttribute('data-name').includes(v)?'block':'none';
+});
 }
-render();
 </script>
+
 </body>
 </html>
