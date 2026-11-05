@@ -6,8 +6,8 @@
 <title>SHEMA MARKET - Kigali</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#f0f2f5;color:#111;padding-bottom:95px}
-header{background:#1e6bff;color:white;padding:16px 15px;position:sticky;top:0;z-index:10}
+body{background:#f0f2f5;color:#111;padding-bottom:100px}
+header{background:#1e6bff;color:white;padding:16px 15px;position:relative;z-index:5}
 .top{display:flex;justify-content:space-between;align-items:center}
 .top h1{font-size:22px}
 .top button{background:white;color:#1e6bff;border:none;padding:8px 14px;border-radius:20px;font-weight:bold;cursor:pointer}
@@ -18,41 +18,93 @@ header{background:#1e6bff;color:white;padding:16px 15px;position:sticky;top:0;z-
 .cats{display:flex;gap:8px;overflow-x:auto;padding:10px 15px}
 .cats button{white-space:nowrap;border:1px solid #ddd;background:white;padding:8px 14px;border-radius:20px;cursor:pointer}
 .cats button.active{background:#1e6bff;color:white}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 15px}
-.card{background:white;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08);position:relative}
-.card img,.card video{width:100%;height:140px;object-fit:cover;background:#eee;display:block}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 15px;position:relative;z-index:1}
+.card{background:white;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.card img{width:100%;height:140px;object-fit:cover;background:#eee;display:block}
 .card .in{padding:10px}
 .price{color:#1e6bff;font-weight:bold;margin:4px 0}
-.btn{display:block;background:#25D366;color:white;text-align:center;padding:10px;border-radius:8px;text-decoration:none;font-weight:bold;margin-top:6px;font-size:14px;border:none;width:100%;cursor:pointer}
+.btn{display:block;background:#25D366;color:white;text-align:center;padding:12px;border-radius:8px;text-decoration:none;font-weight:bold;margin-top:6px;font-size:14px;border:none;width:100%;cursor:pointer}
 .btn2{background:#1e6bff}.btn3{background:#ff6b00}.btnRed{background:#ff0000}
-.fav{position:absolute;top:8px;right:8px;background:white;border:none;width:32px;height:32px;border-radius:50%;font-size:16px;cursor:pointer;z-index:2}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;border-top:1px solid #eee;padding:8px;z-index:20}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;border-top:1px solid #eee;padding:8px;z-index:100}
 .bottom button{flex:1;border:none;background:none;font-size:12px;cursor:pointer;padding:6px}
 .bottom button b{display:block;font-size:20px}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:30;align-items:flex-end;justify-content:center}
+/* WHATSAPP FLOATING - ALWAYS VISIBLE */
+.wa-float{position:fixed;bottom:80px;right:12px;background:#25D366;color:white;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;text-decoration:none;z-index:200;box-shadow:0 4px 12px rgba(0,0,0,.3);border:3px solid white}
+.wa-float span{position:absolute;top:-5px;right:-5px;background:red;color:white;font-size:10px;padding:2px 6px;border-radius:10px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300;align-items:flex-end;justify-content:center}
 .modal.open{display:flex}
 .sheet{background:white;width:100%;max-width:500px;border-radius:20px 20px 0 0;padding:20px;max-height:88vh;overflow:auto}
 .sheet input,.sheet select,.sheet textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-radius:10px;font-size:15px}
 .close{float:right;border:none;background:#eee;width:30px;height:30px;border-radius:50%;cursor:pointer}
 .cartItem{display:flex;gap:10px;background:#f8f8f8;padding:10px;border-radius:10px;margin:6px 0;align-items:center}
-.cartItem img{width:60px;height:60px;object-fit:cover;border-radius:8px}
 .momo{background:#fff3cd;border:1px solid #ffd60a;padding:12px;border-radius:10px;margin:10px 0;text-align:center}
-.toast{position:fixed;top:80px;left:50%;transform:translateX(-50%);background:#111;color:white;padding:10px 18px;border-radius:20px;z-index:50;display:none}
+.toast{position:fixed;top:80px;left:50%;transform:translateX(-50%);background:#111;color:white;padding:10px 18px;border-radius:20px;z-index:500;display:none}
 .info{background:#e8f0ff;padding:12px 15px;margin:10px 15px;border-radius:10px;font-size:13px}
-.googleBtn{background:white!important;color:#111!important;border:1px solid #ddd!important}
-.divider{text-align:center;color:#888;margin:10px 0;font-size:13px}
 #liveVideo{width:100%;border-radius:12px;background:#000;max-height:300px}
 .preview{width:100%;max-height:180px;object-fit:cover;border-radius:10px;display:none;margin-top:6px}
 </style>
 </head>
 <body>
 <header><div class="top"><h1>SHEMA MARKET</h1><button id="btnAccount">Login</button></div><p>Shop Live in Kigali | 0734 311 635 | Fast Delivery</p></header>
-<div class="livebar"><span>🔴 LIVE: <span id="liveCount">128</span> people watching</span><button id="btnGoLiveTop">GO LIVE</button></div>
+<div class="livebar"><span>🔴 LIVE: 128 watching</span><button id="btnGoLiveTop">GO LIVE</button></div>
 <div class="search"><input id="searchInput" placeholder="Search products..."></div>
-<div class="cats" id="cats"><button class="active" data-cat="All">All</button><button data-cat="Vegetables">Vegetables</button><button data-cat="Fruits">Fruits</button><button data-cat="Milk & Eggs">Milk & Eggs</button><button data-cat="Bread">Bread</button><button data-cat="Others">Others</button></div>
-<div class="info">🎉 Promotion: Order above 10,000 RWF, Delivery is FREE in Kigali! | Payment: MoMo / Cash</div>
-
-<!-- PRODUCTS ARE HARDCODED HERE - THEY WILL ALWAYS SHOW -->
+<div class="cats" id="cats"><button class="active" data-cat="All">All</button><button data-cat="Vegetables">Vegetables</button><button data-cat="Fruits">Fruits</button><button data-cat="Milk & Eggs">Milk & Eggs</button><button data-cat="Bread">Bread</button></div>
+<div class="info">🎉 Promotion: Order above 10,000 RWF, Delivery FREE in Kigali! | Pay: MoMo / Cash</div>
 <div class="grid" id="grid">
-<div class="card" data-cat="Vegetables" data-name="Fresh Vegetables"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"><div class="in"><div style="font-size:11px;color:#888">Vegetables</div><h3>Fresh Vegetables</h3><div class="price">2,000 RWF</div><button class="btn btn2 addBtn" data-name="Fresh Vegetables" data-price="2000">Add to Cart</button><a class="btn" href="https://wa.me/250734311635?text=I want to buy Fresh Vegetables">Buy on WhatsApp</a></div></div>
-<div class="card" data-cat="Fruits" data-name="Fresh Apple"><img src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400"><div class="in"><div style="font-size:11px;color:#888">Fruits</div><h3>Fresh Apple</h3><div class="price">1,500 RWF</div><button class="btn btn2 addBtn" data-name="Fresh Apple" data-price="1500">Add to Cart</button><a class="btn" href="https://wa
+<div class="card" data-cat="Vegetables" data-name="Fresh Vegetables"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"><div class="in"><div style="font-size:11px;color:#888">Vegetables</div><h3>Fresh Vegetables</h3><div class="price">2,000 RWF</div><button class="btn btn2 addBtn" data-name="Fresh Vegetables" data-price="2000">Add to Cart</button><a class="btn" href="https://wa.me/250734311635?text=I want to buy Fresh Vegetables">💬 Buy on WhatsApp</a></div></div>
+<div class="card" data-cat="Fruits" data-name="Fresh Apple"><img src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400"><div class="in"><div style="font-size:11px;color:#888">Fruits</div><h3>Fresh Apple</h3><div class="price">1,500 RWF</div><button class="btn btn2 addBtn" data-name="Fresh Apple" data-price="1500">Add to Cart</button><a class="btn" href="https://wa.me/250734311635?text=I want to buy Fresh Apple">💬 Buy on WhatsApp</a></div></div>
+<div class="card" data-cat="Milk & Eggs" data-name="Fresh Milk"><img src="https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400"><div class="in"><div style="font-size:11px;color:#888">Milk & Eggs</div><h3>Fresh Milk</h3><div class="price">1,200 RWF</div><button class="btn btn2 addBtn" data-name="Fresh Milk" data-price="1200">Add to Cart</button><a class="btn" href="https://wa.me/250734311635?text=I want to buy Fresh Milk">💬 Buy on WhatsApp</a></div></div>
+<div class="card" data-cat="Bread" data-name="Bread"><img src="https://images.unsplash.com/photo-1588964895597-cfccd6e2dbf9?w=400"><div class="in"><div style="font-size:11px;color:#888">Bread</div><h3>Bread</h3><div class="price">1,000 RWF</div><button class="btn btn2 addBtn" data-name="Bread" data-price="1000">Add to Cart</button><a class="btn" href="https://wa.me/250734311635?text=I want to buy Bread">💬 Buy on WhatsApp</a></div></div>
+<div class="card" data-cat="Vegetables" data-name="Potatoes"><img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400"><div class="in"><div style="font-size:11px;color:#888">Vegetables</div><h3>Potatoes</h3><div class="price">2,500 RWF</div><button class="btn btn2 addBtn" data-name="Potatoes" data-price="2500">Add to Cart</button><a class="btn" href="https://wa.me/250734311635?text=I want to buy Potatoes">💬 Buy on WhatsApp</a></div></div>
+<div class="card" data-cat="Milk & Eggs" data-name="Eggs"><img src="https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400"><div class="in"><div style="font-size:11px;color:#888">Milk & Eggs</div><h3>Eggs</h3><div class="price">3,000 RWF</div><button class="btn btn2 addBtn" data-name="Eggs" data-price="3000">Add to Cart</button><a class="btn" href="https://wa.me/250734311635?text=I want to buy Eggs">💬 Buy on WhatsApp</a></div></div>
+</div>
+
+<!-- WHATSAPP FLOATING BUTTON - ALWAYS THERE -->
+<a class="wa-float" href="https://wa.me/250734311635?text=Hello SHEMA MARKET! I want to buy" target="_blank">💬<span>Chat</span></a>
+
+<div class="bottom">
+<button id="btnHome"><b>🏠</b>Home</button>
+<button id="btnLive"><b>🔴</b>Live</button>
+<button id="btnAdd"><b>+</b>Add Product</button>
+<button id="btnCart"><b>🛒</b>Cart <span id="cartCount">0</span></button>
+<button id="btnSeller"><b>🏪</b>Seller</button>
+</div>
+
+<div class="modal" id="accountModal"><div class="sheet"><button class="close" data-close="accountModal">X</button><h2>Welcome</h2><div id="accountView"><p>Login with Google or Email</p></div><button class="btn" id="googleBtn" style="background:white;color:#111;border:1px solid #ddd">G Continue with Google</button><p style="text-align:center;color:#888;margin:10px 0">--- OR EMAIL ---</p><input id="accEmail" type="email" placeholder="Email - example@gmail.com"><input id="accPass" type="password" placeholder="Password - min 6"><input id="accName" placeholder="Full Name"><input id="accPhone" placeholder="Phone - 0734..."><input id="accLoc" placeholder="Location - Kimironko..."><button class="btn btn2" id="saveAccountBtn">Login / Create Account</button></div></div>
+<div class="modal" id="addModal"><div class="sheet"><button class="close" data-close="addModal">X</button><h2>Add Product</h2><input id="pName" placeholder="Product Name"><input id="pPrice" type="number" placeholder="Price - 2000"><select id="pCat"><option>Vegetables</option><option>Fruits</option><option>Milk & Eggs</option><option>Bread</option><option>Others</option></select><label><b>📸 Upload Photo</b></label><input id="pPhotoFile" type="file" accept="image/*"><img id="photoPreview" class="preview"><label><b>🎥 Upload Video / Paste Link</b></label><input id="pVideoFile" type="file" accept="video/*"><video id="videoPreview" class="preview" controls></video><input id="pImg" placeholder="Photo link - optional"><input id="pVideo" placeholder="Video link - YouTube"><button class="btn btn2" id="addProductBtn">Publish Product</button></div></div>
+<div class="modal" id="liveModal"><div class="sheet"><button class="close" data-close="liveModal">X</button><h2>🔴 LIVE Selling</h2><video id="liveVideo" autoplay playsinline muted></video><p id="liveStatus" style="text-align:center;margin:8px 0">Tap Start Live</p><button class="btn btnRed" id="startLiveBtn">📹 Start Live Selling</button><button class="btn btn2" id="stopLiveBtn" style="display:none">Stop Live</button><a class="btn" href="https://wa.me/250734311635?text=I saw your LIVE">💬 Buy from LIVE on WhatsApp</a></div></div>
+<div class="modal" id="cartModal"><div class="sheet"><button class="close" data-close="cartModal">X</button><h2>Your Cart</h2><div id="cartList"></div><div id="cartTotal" style="font-weight:bold;font-size:18px;margin:10px 0"></div><div class="momo"><b>PAY WITH MoMo</b><br>Send to:<br><b style="font-size:20px;color:#e60000">0734 311 635</b><br><br><button class="btn btn3" id="copyMoMoBtn">Copy MoMo Number</button></div><button class="btn" id="checkoutBtn">💬 Send Order to WhatsApp</button></div></div>
+<div class="modal" id="sellerModal"><div class="sheet"><button class="close" data-close="sellerModal">X</button><h2>Seller Dashboard</h2><p>Products: <b>6</b><br>Rating: <b>4.8 ⭐</b></p><button class="btn btnRed" id="sellerLiveBtn">🔴 Go Live & Sell</button></div></div>
+<div class="toast" id="toast"></div>
+<script>
+var cart=[];var user=null;var tempPhoto="";var tempVideo="";
+function toast(t){var el=document.getElementById("toast");el.innerText=t;el.style.display="block";setTimeout(function(){el.style.display="none"},2500)}
+function openModal(id){var m=document.getElementById(id);if(m)m.classList.add("open");if(id=="cartModal")renderCart()}
+function closeModal(id){var m=document.getElementById(id);if(m)m.classList.remove("open")}
+function renderCart(){var list=document.getElementById("cartList");list.innerHTML="";var total=0;for(var i=0;i<cart.length;i++){total+=cart[i].price;var d=document.createElement("div");d.className="cartItem";d.innerHTML='<div style="flex:1"><b>'+cart[i].name+'</b><br>'+cart[i].price.toLocaleString()+' RWF</div>';(function(idx){var b=document.createElement("button");b.innerText="X";b.style.cssText="border:none;background:#ffe0e0;padding:6px 10px;border-radius:8px";b.onclick=function(){cart.splice(idx,1);document.getElementById("cartCount").innerText=cart.length;renderCart()};d.appendChild(b)})(i);list.appendChild(d)}if(cart.length==0)list.innerHTML="Your cart is empty.";document.getElementById("cartTotal").innerText="Total: "+total.toLocaleString()+" RWF"}
+document.getElementById("btnAccount").onclick=function(){openModal("accountModal")};
+document.getElementById("btnAdd").onclick=function(){openModal("addModal")};
+document.getElementById("btnCart").onclick=function(){openModal("cartModal")};
+document.getElementById("btnSeller").onclick=function(){openModal("sellerModal")};
+document.getElementById("btnHome").onclick=function(){window.scrollTo(0,0)};
+document.getElementById("btnLive").onclick=function(){openModal("liveModal")};
+document.getElementById("btnGoLiveTop").onclick=function(){openModal("liveModal")};
+document.getElementById("sellerLiveBtn").onclick=function(){closeModal("sellerModal");openModal("liveModal")};
+document.getElementById("searchInput").oninput=function(){var q=this.value.toLowerCase();var cards=document.querySelectorAll("#grid .card");for(var i=0;i<cards.length;i++){var n=cards[i].getAttribute("data-name").toLowerCase();cards[i].style.display=(n.indexOf(q)!==-1)?"block":"none"}};
+var catBtns=document.querySelectorAll("#cats button");for(var i=0;i<catBtns.length;i++){catBtns[i].onclick=function(){for(var j=0;j<catBtns.length;j++)catBtns[j].classList.remove("active");this.classList.add("active");var cat=this.getAttribute("data-cat");var cards=document.querySelectorAll("#grid .card");for(var k=0;k<cards.length;k++){cards[k].style.display=(cat=="All"||cards[k].getAttribute("data-cat")==cat)?"block":"none"}}};
+var addBtns=document.querySelectorAll(".addBtn");for(var a=0;a<addBtns.length;a++){addBtns[a].onclick=function(){cart.push({name:this.getAttribute("data-name"),price:parseInt(this.getAttribute("data-price"))});document.getElementById("cartCount").innerText=cart.length;toast("Added to cart!")}};
+document.getElementById("googleBtn").onclick=function(){var email=prompt("Enter your Google Email:","example@gmail.com");if(!email)return;var name=email.split("@")[0];user={name:name,email:email};document.getElementById("btnAccount").innerText=name;toast("Welcome "+name+"! Google Login OK");closeModal("accountModal")};
+document.getElementById("saveAccountBtn").onclick=function(){var email=document.getElementById("accEmail").value;var pass=document.getElementById("accPass").value;var n=document.getElementById("accName").value;if(!email||email.indexOf("@")==-1){toast("Enter valid email!");return}if(!pass||pass.length<6){toast("Password 6+ chars!");return}if(!n){toast("Enter name!");return}document.getElementById("btnAccount").innerText=n;toast("Welcome "+n+"!");closeModal("accountModal")};
+document.getElementById("pPhotoFile").onchange=function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){tempPhoto=r.result;var pv=document.getElementById("photoPreview");pv.src=tempPhoto;pv.style.display="block";toast("Photo uploaded!")};r.readAsDataURL(f)};
+document.getElementById("pVideoFile").onchange=function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){tempVideo=r.result;var pv=document.getElementById("videoPreview");pv.src=tempVideo;pv.style.display="block";toast("Video uploaded!")};r.readAsDataURL(f)};
+document.getElementById("addProductBtn").onclick=function(){var n=document.getElementById("pName").value;var pr=document.getElementById("pPrice").value;var cat=document.getElementById("pCat").value;var img=document.getElementById("pImg").value;var vid=document.getElementById("pVideo").value;if(!n||!pr){toast("Enter name and price!");return}if(tempPhoto)img=tempPhoto;if(tempVideo)vid=tempVideo;if(!img)img="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400";var grid=document.getElementById("grid");var div=document.createElement("div");div.className="card";div.setAttribute("data-cat",cat);div.setAttribute("data-name",n);var media=vid?'<video src="'+vid+'" controls></video>':'<img src="'+img+'">';div.innerHTML=media+'<div class="in"><div style="font-size:11px;color:#888">'+cat+'</div><h3>'+n+'</h3><div class="price">'+parseInt(pr).toLocaleString()+' RWF</div><a class="btn" href="https://wa.me/250734311635?text=I want to buy '+encodeURIComponent(n)+'">💬 Buy on WhatsApp</a></div>';grid.prepend(div);closeModal("addModal");toast("Product published!")};
+var liveStream=null;
+document.getElementById("startLiveBtn").onclick=function(){if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){toast("Camera not supported on this browser");return}navigator.mediaDevices.getUserMedia({video:true,audio:true}).then(function(s){liveStream=s;document.getElementById("liveVideo").srcObject=s;document.getElementById("liveStatus").innerText="🔴 YOU ARE LIVE NOW!";document.getElementById("startLiveBtn").style.display="none";document.getElementById("stopLiveBtn").style.display="block";toast("You are LIVE!")}).catch(function(){toast("Allow camera to go live.")})};
+document.getElementById("stopLiveBtn").onclick=function(){if(liveStream)liveStream.getTracks().forEach(function(t){t.stop()});document.getElementById("liveVideo").srcObject=null;document.getElementById("startLiveBtn").style.display="block";document.getElementById("stopLiveBtn").style.display="none"};
+document.getElementById("copyMoMoBtn").onclick=function(){try{navigator.clipboard.writeText("0734311635");toast("MoMo number copied!")}catch(e){toast("Number: 0734311635")}};
+document.getElementById("checkoutBtn").onclick=function(){if(cart.length==0){toast("Cart is empty!");return}var total=0;var msg="Hello SHEMA MARKET! I want to buy: ";for(var i=0;i<cart.length;i++){total+=cart[i].price;msg+=" - "+cart[i].name+" "+cart[i].price+" RWF "}msg+=" Total: "+total+" RWF";window.open("https://wa.me/250734311635?text="+encodeURIComponent(msg),"_blank");cart=[];document.getElementById("cartCount").innerText="0";closeModal("cartModal");toast("Order sent to WhatsApp!")};
+var closes=document.querySelectorAll(".close");for(var i=0;i<closes.length;i++){closes[i].onclick=function(){closeModal(this.getAttribute("data-close"))}};
+var modals=document.querySelectorAll(".modal");for(var j=0;j<modals.length;j++){modals[j].onclick=function(e){if(e.target==this)this.classList.remove("open")}};
+</script>
+</body>
+</html>
