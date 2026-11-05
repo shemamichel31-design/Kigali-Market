@@ -9,7 +9,7 @@
 body{background:#f0f2f5;color:#111;padding-bottom:90px;font-family:Arial,sans-serif}
 header{background:#1e6bff;color:white;padding:14px;position:sticky;top:0;z-index:10}
 .top{display:flex;justify-content:space-between;align-items:center}
-.top h1{font-size:22px}
+.top h1{font-size:20px}
 .top button{background:white;color:#1e6bff;border:none;padding:8px 12px;border-radius:20px;font-weight:bold}
 .livebar{background:#ff0000;color:white;padding:10px;text-align:center;font-weight:bold;font-size:14px;cursor:pointer}
 .search{padding:12px 15px;background:white}
@@ -23,22 +23,92 @@ header{background:#1e6bff;color:white;padding:14px;position:sticky;top:0;z-index
 .card .in{padding:10px}
 .price{color:#1e6bff;font-weight:bold;margin:5px 0}
 .btn{display:block;background:#25D366;color:white;text-align:center;padding:10px;text-decoration:none;border-radius:8px;font-weight:bold;margin-top:8px;border:none;width:100%;font-size:14px}
-.btn2{display:block;background:#1e6bff;color:white;text-align:center;padding:9px;text-decoration:none;border-radius:8px;font-weight:bold;margin-top:6px;border:none;width:100%;font-size:14px}
+.btn2{display:block;background:#1e6bff;color:white;text-align:center;padding:9px;border-radius:8px;font-weight:bold;margin-top:6px;border:none;width:100%;font-size:14px;color:white}
 footer{text-align:center;padding:20px;color:#666;font-size:13px}
 .cartbar{position:fixed;bottom:0;left:0;right:0;background:#111;color:white;padding:12px 15px;display:flex;justify-content:space-between;align-items:center;z-index:20}
 .cartbar button{background:#25D366;color:white;border:none;padding:10px 18px;border-radius:20px;font-weight:bold}
+/* LOGIN MODAL */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;align-items:center;justify-content:center;padding:20px}
+.modal.open{display:flex}
+.box{background:white;width:100%;max-width:380px;border-radius:16px;padding:22px;position:relative}
+.box h2{text-align:center;margin-bottom:4px}
+.box p{text-align:center;color:#666;font-size:13px;margin-bottom:14px}
+.box input{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin-bottom:10px;font-size:15px}
+.box .g{background:white;border:1px solid #ddd;padding:12px;border-radius:10px;width:100%;font-weight:bold;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;font-size:15px}
+.box .main{background:#1e6bff;color:white;border:none;padding:13px;border-radius:10px;width:100%;font-weight:bold;font-size:16px;margin-top:4px}
+.box .phone{background:#25D366;color:white;border:none;padding:13px;border-radius:10px;width:100%;font-weight:bold;font-size:15px;margin-top:8px}
+.close{position:absolute;right:14px;top:10px;font-size:22px;border:none;background:none}
+.tabs{display:flex;background:#f0f2f5;border-radius:10px;padding:4px;margin-bottom:14px}
+.tabs button{flex:1;padding:9px;border:none;border-radius:8px;background:transparent;font-weight:bold}
+.tabs button.active{background:white;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.userbar{background:#e8f0ff;padding:8px 15px;display:flex;justify-content:space-between;align-items:center;font-size:14px}
+.userbar button{background:#ff4444;color:white;border:none;padding:5px 10px;border-radius:12px;font-size:12px}
 </style>
 </head>
 <body>
-<header><div class="top"><h1>🛒 SHEMA MARKET</h1><button onclick="location.href='https://wa.me/250734311682'">📍 Kigali</button></div><p style="font-size:13px;margin-top:4px">Fresh • Fast • Affordable - Kigali Market Online</p></header>
+<header><div class="top"><h1>🛒 SHEMA MARKET</h1><div><button onclick="openLogin()">👤 <span id="loginBtn">Login</span></button></div></div><p style="font-size:13px;margin-top:4px">Fresh • Fast • Affordable - Kigali Market Online</p></header>
+<div id="userbar" class="userbar" style="display:none">Muraho, <b id="userName"></b> 👋 <button onclick="logout()">Logout</button></div>
 <div class="livebar" onclick="location.href='https://wa.me/250734311682?text='+encodeURIComponent('Hello SHEMA MARKET! Ndi live, ndashaka kugura!')">🔴 LIVE NOW - <span id="viewers">128</span> bari kureba • Kanda hano ugure LIVE!</div>
 <div class="search"><input id="q" placeholder="🔍 Shaka... e.g. Avocado, Rice, Shoes" oninput="filter()"></div>
 <div class="cats" id="cats"></div>
 <div class="grid" id="grid"></div>
 <footer>📞 WhatsApp: 0734311682<br>© 2026 SHEMA MARKET - Kigali, Rwanda</footer>
-<div class="cartbar"><span>🛒 Cart: <b id="count">0</b> ibintu • <b id="total">0 RWF</b></span><button onclick="checkout()">Checkout WhatsApp →</button></div>
+<div class="cartbar"><span>🛒 Cart: <b id="count">0</b> • <b id="total">0 RWF</b></span><button onclick="checkout()">Checkout WhatsApp →</button></div>
+
+<!-- LOGIN MODAL -->
+<div id="loginModal" class="modal"><div class="box">
+<button class="close" onclick="closeLogin()">✕</button>
+<h2>Welcome to SHEMA MARKET</h2><p>Winjire cyangwa wiyandikishe kugirango ugure byoroshye</p>
+<div class="tabs"><button id="tabLogin" class="active" onclick="switchTab('login')">Login</button><button id="tabSignup" onclick="switchTab('signup')">Sign Up</button></div>
+<button class="g" onclick="loginGoogle()">🔍 Continue with Google</button>
+<p style="margin:8px 0;color:#999">— cyangwa —</p>
+<input id="nameInput" placeholder="Izina ryawe (Sign Up gusa)" style="display:none">
+<input id="emailInput" placeholder="Email yawe - ex: shema@gmail.com" type="email">
+<input id="passInput" placeholder="Password" type="password">
+<button class="main" onclick="doAuth()" id="authBtn">Login</button>
+<button class="phone" onclick="loginPhone()">📱 Login na Phone / WhatsApp</button>
+<p style="margin-top:10px;font-size:12px">Ukinjira, order zawe zizajya kuri WhatsApp 0734311682 ziriho izina ryawe.</p>
+</div></div>
+
 <script>
 const WA="250734311682";
+let mode='login';
+function openLogin(){document.getElementById('loginModal').classList.add('open');}
+function closeLogin(){document.getElementById('loginModal').classList.remove('open');}
+function switchTab(m){mode=m;document.getElementById('tabLogin').className=m=='login'?'active':'';document.getElementById('tabSignup').className=m=='signup'?'active':'';document.getElementById('nameInput').style.display=m=='signup'?'block':'none';document.getElementById('authBtn').innerText=m=='signup'?'Sign Up':'Login';}
+function saveUser(name,email){localStorage.setItem('shema_user',JSON.stringify({name,email}));showUser();closeLogin();}
+function showUser(){let u=JSON.parse(localStorage.getItem('shema_user')||'null');if(u){document.getElementById('loginBtn').innerText=u.name.split(' ')[0];document.getElementById('userName').innerText=u.name;document.getElementById('userbar').style.display='flex';}}
+function logout(){localStorage.removeItem('shema_user');location.reload();}
+function doAuth(){
+let email=document.getElementById('emailInput').value.trim();
+let pass=document.getElementById('passInput').value;
+let name=document.getElementById('nameInput').value.trim()||email.split('@')[0];
+if(!email||!pass) return alert('Uzuza Email na Password!');
+if(mode=='signup'){
+let users=JSON.parse(localStorage.getItem('shema_users')||'{}');
+if(users[email]) return alert('Uyi email yamaze kwiyandikisha, injira!');
+users[email]={name,pass};localStorage.setItem('shema_users',JSON.stringify(users));
+saveUser(name,email);alert('Murakaza neza '+name+'! Wiyandikishije neza 🎉');
+}else{
+let users=JSON.parse(localStorage.getItem('shema_users')||'{}');
+if(users[email]&&users[email].pass==pass){saveUser(users[email].name,email);alert('Muraho '+users[email].name+'! Winjiye neza ✅');}
+else if(!users[email]){alert('Nta account ifite iyi email. Kanda Sign Up ubanze wiyandikishe.');switchTab('signup');}
+else alert('Password ntabwo ari yo, gerageza nanone.');
+}
+}
+function loginGoogle(){
+let name=prompt('Andika izina ryawe rya Google (urugero: Shema Michel):');
+if(!name) return;
+let email=prompt('Andika Gmail yawe:');
+if(!email) return;
+saveUser(name,email);alert('Winjiye na Google nka '+name+' ✅');
+}
+function loginPhone(){
+let phone=prompt('Andika numero ya telefone (ex: 0734311682):');
+if(!phone) return;
+let name=prompt('Andika izina ryawe:')||('User '+phone.slice(-4));
+saveUser(name,phone);alert('Winjiye na Phone '+phone+' ✅');
+}
 const products=[
 {name:"Avocado Fresh (5 pcs)",cat:"Food",price:3000,img:"https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=400"},
 {name:"Irish Potatoes 5kg",cat:"Food",price:5000,img:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400"},
@@ -60,14 +130,14 @@ function setCat(c){cur=c;renderCats();filter();}
 function filter(){
 let q=document.getElementById('q').value.toLowerCase();
 let list=products.filter(p=>(cur=="All"||p.cat==cur)&&p.name.toLowerCase().includes(q));
-document.getElementById('grid').innerHTML=list.map((p,i)=>`
-<div class="card"><img src="${p.img}" onerror="this.src='https://via.placeholder.com/400x300?text=SHEMA+MARKET'"><div class="in"><b>${p.name}</b><div style="font-size:12px;color:#888">${p.cat} • Kigali</div><div class="price">${p.price.toLocaleString()} RWF</div><button class="btn2" onclick="add(${products.indexOf(p)})">➕ Add to Cart</button><a class="btn" href="https://wa.me/${WA}?text=${encodeURIComponent('Hello SHEMA MARKET! Ndashaka kugura: '+p.name+' - '+p.price+' RWF')}">Order on WhatsApp</a></div></div>`).join('')||'<p style="grid-column:1/3;text-align:center;padding:20px">Nta byabonetse 😔</p>';
+document.getElementById('grid').innerHTML=list.map(p=>`
+<div class="card"><img src="${p.img}" onerror="this.src='https://via.placeholder.com/400x300?text=SHEMA+MARKET'"><div class="in"><b>${p.name}</b><div style="font-size:12px;color:#888">${p.cat} • Kigali</div><div class="price">${p.price.toLocaleString()} RWF</div><button class="btn2" onclick="add(${products.indexOf(p)})">➕ Add to Cart</button><a class="btn" href="https://wa.me/${WA}?text=${encodeURIComponent('Hello SHEMA MARKET! Ndashaka kugura: '+p.name)}">Order on WhatsApp</a></div></div>`).join('')||'<p style="grid-column:1/3;text-align:center;padding:20px">Nta byabonetse 😔</p>';
 }
-function add(i){cart.push(products[i]);updateCart();alert(products[i].name+' yongewe muri Cart!');}
+function add(i){let u=JSON.parse(localStorage.getItem('shema_user')||'null');if(!u){openLogin();alert('Banza winjire / wiyandikishe kugirango ugure!');return;}cart.push(products[i]);updateCart();alert(products[i].name+' yongewe muri Cart!');}
 function updateCart(){let t=cart.reduce((s,p)=>s+p.price,0);document.getElementById('count').innerText=cart.length;document.getElementById('total').innerText=t.toLocaleString()+' RWF';}
-function checkout(){if(!cart.length)return alert('Cart irimo ubusa, hitamo ibicuruzwa!');let msg='Hello SHEMA MARKET! Ndashaka kugura LIVE:\n\n'+cart.map(p=>'- '+p.name+' : '+p.price+' RWF').join('\n')+'\n\nTOTAL: '+cart.reduce((s,p)=>s+p.price,0).toLocaleString()+' RWF';location.href='https://wa.me/'+WA+'?text='+encodeURIComponent(msg);}
+function checkout(){if(!cart.length)return alert('Cart irimo ubusa!');let u=JSON.parse(localStorage.getItem('shema_user')||'null');if(!u){openLogin();return alert('Banza winjire!');}let msg='Hello SHEMA MARKET! Ndi '+u.name+' ('+u.email+')\nNdashaka kugura:\n\n'+cart.map(p=>'- '+p.name+' : '+p.price+' RWF').join('\n')+'\n\nTOTAL: '+cart.reduce((s,p)=>s+p.price,0).toLocaleString()+' RWF';location.href='https://wa.me/'+WA+'?text='+encodeURIComponent(msg);}
 setInterval(()=>{document.getElementById('viewers').innerText=120+Math.floor(Math.random()*60);},3000);
-renderCats();filter();
+showUser();renderCats();filter();
 </script>
 </body>
 </html>
