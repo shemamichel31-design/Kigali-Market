@@ -24,9 +24,7 @@ header{background:#1e6bff;color:white;padding:16px 15px;position:sticky;top:0;z-
 .card .in{padding:10px}
 .price{color:#1e6bff;font-weight:bold;margin:4px 0}
 .btn{display:block;background:#25D366;color:white;text-align:center;padding:10px;border-radius:8px;text-decoration:none;font-weight:bold;margin-top:6px;font-size:14px;border:none;width:100%;cursor:pointer}
-.btn2{background:#1e6bff}
-.btn3{background:#ff6b00}
-.btnRed{background:#ff0000}
+.btn2{background:#1e6bff}.btn3{background:#ff6b00}.btnRed{background:#ff0000}
 .fav{position:absolute;top:8px;right:8px;background:white;border:none;width:32px;height:32px;border-radius:50%;font-size:16px;cursor:pointer;z-index:2}
 .bottom{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;border-top:1px solid #eee;padding:8px;z-index:20}
 .bottom button{flex:1;border:none;background:none;font-size:12px;cursor:pointer;padding:6px}
@@ -41,89 +39,20 @@ header{background:#1e6bff;color:white;padding:16px 15px;position:sticky;top:0;z-
 .momo{background:#fff3cd;border:1px solid #ffd60a;padding:12px;border-radius:10px;margin:10px 0;text-align:center}
 .toast{position:fixed;top:80px;left:50%;transform:translateX(-50%);background:#111;color:white;padding:10px 18px;border-radius:20px;z-index:50;display:none}
 .info{background:#e8f0ff;padding:12px 15px;margin:10px 15px;border-radius:10px;font-size:13px}
-.googleBtn{background:white!important;color:#111!important;border:1px solid #ddd!important;display:flex;align-items:center;justify-content:center;gap:8px}
+.googleBtn{background:white!important;color:#111!important;border:1px solid #ddd!important}
 .divider{text-align:center;color:#888;margin:10px 0;font-size:13px}
 #liveVideo{width:100%;border-radius:12px;background:#000;max-height:300px}
 .preview{width:100%;max-height:180px;object-fit:cover;border-radius:10px;display:none;margin-top:6px}
 </style>
 </head>
 <body>
-<header>
-<div class="top"><h1>SHEMA MARKET</h1><button id="btnAccount">Login</button></div>
-<p>Shop Live in Kigali | 0734 311 635 | Fast Delivery</p>
-</header>
+<header><div class="top"><h1>SHEMA MARKET</h1><button id="btnAccount">Login</button></div><p>Shop Live in Kigali | 0734 311 635 | Fast Delivery</p></header>
 <div class="livebar"><span>🔴 LIVE: <span id="liveCount">128</span> people watching</span><button id="btnGoLiveTop">GO LIVE</button></div>
 <div class="search"><input id="searchInput" placeholder="Search products..."></div>
-<div class="cats" id="cats"></div>
+<div class="cats" id="cats"><button class="active" data-cat="All">All</button><button data-cat="Vegetables">Vegetables</button><button data-cat="Fruits">Fruits</button><button data-cat="Milk & Eggs">Milk & Eggs</button><button data-cat="Bread">Bread</button><button data-cat="Others">Others</button></div>
 <div class="info">🎉 Promotion: Order above 10,000 RWF, Delivery is FREE in Kigali! | Payment: MoMo / Cash</div>
-<div class="grid" id="grid"></div>
-<div class="bottom">
-<button id="btnHome"><b>HOME</b>Home</button>
-<button id="btnLive"><b>🔴</b>Live</button>
-<button id="btnAdd"><b>+</b>Add Product</button>
-<button id="btnCart"><b>🛒</b>Cart <span id="cartCount">0</span></button>
-<button id="btnSeller"><b>🏪</b>Seller</button>
-</div>
 
-<!-- LOGIN -->
-<div class="modal" id="accountModal"><div class="sheet"><button class="close" data-close="accountModal">X</button><h2>Welcome to SHEMA MARKET</h2><div id="accountView"></div>
-<button class="btn googleBtn" id="googleBtn"><span style="font-size:18px">G</span> Continue with Google</button>
-<div class="divider">--- OR LOGIN WITH EMAIL ---</div>
-<input id="accEmail" type="email" placeholder="Email - example@gmail.com">
-<input id="accPass" type="password" placeholder="Password - min 6 characters">
-<input id="accName" placeholder="Full Name">
-<input id="accPhone" placeholder="Phone - 0734...">
-<input id="accLoc" placeholder="Location - Kimironko, Nyamirambo...">
-<button class="btn btn2" id="saveAccountBtn">Login / Create Account</button>
-<p style="font-size:12px;color:#888;margin-top:8px">By continuing you agree to our Terms. Your account is saved securely on this device.</p>
-</div></div>
-
-<!-- ADD PRODUCT WITH PHOTO + VIDEO -->
-<div class="modal" id="addModal"><div class="sheet"><button class="close" data-close="addModal">X</button><h2>Add Product</h2>
-<input id="pName" placeholder="Product Name - e.g. Potatoes">
-<input id="pPrice" type="number" placeholder="Price - 2000">
-<select id="pCat"><option>Vegetables</option><option>Fruits</option><option>Milk & Eggs</option><option>Bread</option><option>Others</option></select>
-<label style="font-size:13px;font-weight:bold">📸 Upload Photo from Phone</label>
-<input id="pPhotoFile" type="file" accept="image/*">
-<img id="photoPreview" class="preview">
-<label style="font-size:13px;font-weight:bold">🎥 Upload Long Video (from Phone)</label>
-<input id="pVideoFile" type="file" accept="video/*">
-<video id="videoPreview" class="preview" controls></video>
-<label style="font-size:13px;font-weight:bold">OR Paste Photo / Video Link (YouTube, etc)</label>
-<input id="pImg" placeholder="Photo link - optional">
-<input id="pVideo" placeholder="Video link - YouTube / TikTok / MP4 link">
-<textarea id="pDesc" placeholder="Description - Fresh, 1kg..."></textarea>
-<button class="btn btn2" id="addProductBtn">Publish Product</button>
-</div></div>
-
-<!-- LIVE MODAL -->
-<div class="modal" id="liveModal"><div class="sheet"><button class="close" data-close="liveModal">X</button><h2>🔴 LIVE Selling</h2>
-<video id="liveVideo" autoplay playsinline muted></video>
-<p id="liveStatus" style="text-align:center;margin:8px 0">Tap Start Live to turn on your camera</p>
-<button class="btn btnRed" id="startLiveBtn">📹 Start Live Selling</button>
-<button class="btn btn2" id="stopLiveBtn" style="display:none">Stop Live</button>
-<div style="background:#f8f8f8;padding:10px;border-radius:10px;margin-top:10px"><b>Live Comments:</b><br>👤 Aline: How much for potatoes? 😍<br>👤 Jean: I want 2kg please!<br>👤 Marie: Delivery to Kicukiro?</div>
-<button class="btn" onclick="window.open('https://wa.me/250734311635?text=I saw your LIVE, I want to buy!')">Buy from LIVE on WhatsApp</button>
-</div></div>
-
-<!-- CART -->
-<div class="modal" id="cartModal"><div class="sheet"><button class="close" data-close="cartModal">X</button><h2>Your Cart</h2><div id="cartList"></div><div id="cartTotal" style="font-weight:bold;font-size:18px;margin:10px 0"></div><select id="delivery"><option value="0">Home Delivery Kigali - 1,000 RWF (FREE if over 10,000)</option><option value="2000">Express Delivery - 2,000 RWF</option><option value="0">Pick Up - FREE</option></select><div class="momo"><b>PAY WITH MoMo</b><br>Send to:<br><b style="font-size:20px;color:#e60000">0734 311 635 - SHEMA MARKET</b><br><br><button class="btn btn3" id="copyMoMoBtn">Copy MoMo Number</button></div><button class="btn" id="checkoutBtn">Send Order to WhatsApp</button></div></div>
-
-<!-- SELLER -->
-<div class="modal" id="sellerModal"><div class="sheet"><button class="close" data-close="sellerModal">X</button><h2>Seller Dashboard</h2><div id="sellerView"></div><button class="btn btnRed" id="sellerLiveBtn">🔴 Go Live & Sell</button></div></div>
-<div class="toast" id="toast"></div>
-
-<script>
-if(window.location.search.indexOf("reset")!==-1){localStorage.removeItem("shema_products");localStorage.removeItem("shema_cart");localStorage.removeItem("shema_favs");}
-function safeGet(key){try{var v=localStorage.getItem(key);if(!v||v==="null") return null;var p=JSON.parse(v);if(!Array.isArray(p)) return null;return p;}catch(e){return null}}
-var defaultProducts=[
-{name:"Fresh Vegetables",price:2000,cat:"Vegetables",img:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400",video:""},
-{name:"Fresh Apple",price:1500,cat:"Fruits",img:"https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400",video:""},
-{name:"Fresh Milk",price:1200,cat:"Milk & Eggs",img:"https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400",video:""},
-{name:"Bread",price:1000,cat:"Bread",img:"https://images.unsplash.com/photo-1588964895597-cfccd6e2dbf9?w=400",video:""},
-{name:"Potatoes",price:2500,cat:"Vegetables",img:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400",video:""},
-{name:"Eggs",price:3000,cat:"Milk & Eggs",img:"https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400",video:""}
-];
-var products=safeGet("shema_products");if(!products||products.length===0) products=defaultProducts;
-var cart=safeGet("shema_cart")||[];var favs=safeGet("shema_favs")||[];
-var
+<!-- PRODUCTS ARE HARDCODED HERE - THEY WILL ALWAYS SHOW -->
+<div class="grid" id="grid">
+<div class="card" data-cat="Vegetables" data-name="Fresh Vegetables"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"><div class="in"><div style="font-size:11px;color:#888">Vegetables</div><h3>Fresh Vegetables</h3><div class="price">2,000 RWF</div><button class="btn btn2 addBtn" data-name="Fresh Vegetables" data-price="2000">Add to Cart</button><a class="btn" href="https://wa.me/250734311635?text=I want to buy Fresh Vegetables">Buy on WhatsApp</a></div></div>
+<div class="card" data-cat="Fruits" data-name="Fresh Apple"><img src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400"><div class="in"><div style="font-size:11px;color:#888">Fruits</div><h3>Fresh Apple</h3><div class="price">1,500 RWF</div><button class="btn btn2 addBtn" data-name="Fresh Apple" data-price="1500">Add to Cart</button><a class="btn" href="https://wa
