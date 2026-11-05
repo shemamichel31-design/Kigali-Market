@@ -14,6 +14,6 @@ function au(){let n=document.getElementById('nm').value||'User',e=document.getEl
 const P=[["Avocado 5pcs",3000,"photo-1523049673857-eb18f1d7b578"],["Rice 5kg",7500,"photo-1586201375761-83865001e31c"],["Sneakers White",35000,"photo-1542291026-7eec264c27ff"],["Phone Charger",12000,"photo-1583863788434-e58a36330cf0"]];
 function fil(){let q=document.getElementById('q').value.toLowerCase();document.getElementById('g').innerHTML=P.filter(p=>p[0].toLowerCase().includes(q)).map((p,i)=>`<div class="card"><img src="https://images.unsplash.com/${p[2]}?w=400"><div class="in"><b>${p[0]}</b><div class="pr">${p[1]} RWF</div><button class="btn2" onclick="add(${i})">${T[lang].add}</button><a class="btn" style="display:block;text-decoration:none" href="https://wa.me/250734311682?text=Hello SHEMA, I want ${p[0]}">${T[lang].ord}</a></div></div>`).join('')}
 function add(i){if(!localStorage.getItem('su')){oL();return alert('Please Login first')}cart.push(P[i]);document.getElementById('c').innerText=cart.length;document.getElementById('t').innerText=cart.reduce((s,p)=>s+p[1],0)+' RWF'}
-function co(){if(!cart.length)return alert('Cart empty');location.href='https://wa.me/250734311682?text='+encodeURIComponent('Hello SHEMA, Order: '+cart.map(p=>p[0]).join(', '))}
+function co(){if(!cart.leng)return alert('Cart empty');location.href='https://wa.me/250734311682?text='+encodeURIComponent('Hello SHEMA, Order: '+cart.map(p=>p[0]).join(', '))}
 fil();setL('en');
 </script></body></html>
