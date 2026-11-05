@@ -6,35 +6,128 @@
 <title>SHEMA MARKET - Kigali</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#f5f5f5;color:#111}
-header{background:#1e6bff;color:white;padding:20px;text-align:center}
-header h1{font-size:28px}
-header p{margin-top:5px}
-.search{padding:15px}
-.search input{width:100%;padding:14px;border-radius:10px;border:1px solid #ddd;font-size:16px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 15px 20px}
-.card{background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+body{background:#f0f2f5;color:#111;padding-bottom:90px}
+header{background:#1e6bff;color:white;padding:16px 15px 14px;position:sticky;top:0;z-index:10}
+.top{display:flex;justify-content:space-between;align-items:center}
+.top h1{font-size:22px}
+.top button{background:white;color:#1e6bff;border:none;padding:7px 12px;border-radius:20px;font-weight:bold;cursor:pointer}
+header p{font-size:13px;margin-top:4px;opacity:.95}
+.search{padding:12px 15px 8px;background:white;position:sticky;top:64px;z-index:9}
+.search input{width:100%;padding:13px;border-radius:10px;border:1px solid #ddd;font-size:15px}
+.cats{display:flex;gap:8px;overflow-x:auto;padding:10px 15px}
+.cats button{white-space:nowrap;border:1px solid #ddd;background:white;padding:8px 14px;border-radius:20px;cursor:pointer}
+.cats button.active{background:#1e6bff;color:white;border-color:#1e6bff}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 15px}
+.card{background:white;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08);position:relative}
 .card img{width:100%;height:140px;object-fit:cover}
-.card div{padding:10px}
+.card .in{padding:10px}
 .card h3{font-size:15px}
-.price{color:#1e6bff;font-weight:bold;margin:5px 0}
-.btn{display:block;background:#25D366;color:white;text-align:center;padding:10px;border-radius:8px;text-decoration:none;font-weight:bold;margin-top:5px}
-footer{text-align:center;padding:20px;color:#888}
+.cat{font-size:11px;color:#888}
+.price{color:#1e6bff;font-weight:bold;margin:4px 0}
+.stars{color:#ffb400;font-size:13px}
+.btn{display:block;background:#25D366;color:white;text-align:center;padding:9px;border-radius:8px;text-decoration:none;font-weight:bold;margin-top:6px;font-size:14px;border:none;width:100%;cursor:pointer}
+.btn2{background:#1e6bff}
+.btn3{background:#ff6b00}
+.fav{position:absolute;top:8px;right:8px;background:white;border:none;width:32px;height:32px;border-radius:50%;font-size:16px;cursor:pointer}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;border-top:1px solid #eee;padding:8px;z-index:20}
+.bottom button{flex:1;border:none;background:none;font-size:13px;cursor:pointer;padding:6px}
+.bottom button b{display:block;font-size:20px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:30;align-items:flex-end;justify-content:center}
+.modal.open{display:flex}
+.sheet{background:white;width:100%;max-width:500px;border-radius:20px 20px 0 0;padding:20px;max-height:85vh;overflow:auto}
+.sheet h2{margin-bottom:12px}
+.sheet input,.sheet select,.sheet textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-radius:10px;font-size:15px}
+.close{float:right;border:none;background:#eee;width:30px;height:30px;border-radius:50%;cursor:pointer}
+.cartItem{display:flex;gap:10px;background:#f8f8f8;padding:10px;border-radius:10px;margin:6px 0;align-items:center}
+.cartItem img{width:60px;height:60px;object-fit:cover;border-radius:8px}
+.momo{background:#fff3cd;border:1px solid #ffd60a;padding:12px;border-radius:10px;margin:10px 0;text-align:center}
+.momo b{font-size:20px;color:#e60000}
+.toast{position:fixed;top:80px;left:50%;transform:translateX(-50%);background:#111;color:white;padding:10px 18px;border-radius:20px;z-index:50;display:none}
+.badge{background:red;color:white;border-radius:50%;padding:1px 6px;font-size:11px}
+.info{background:#e8f0ff;padding:12px 15px;margin:10px 15px;border-radius:10px;font-size:13px;line-height:1.5}
 </style>
 </head>
 <body>
 <header>
-<h1>🛒 SHEMA MARKET</h1>
-<p>Gura Live Hano - Kigali</p>
-<p>📞 0734 311 635 | Delivery Yihuta</p>
+<div class="top"><h1>🛒 SHEMA MARKET</h1><button onclick="openModal('accountModal')">👤 <span id="userName">Injira</span></button></div>
+<p>Gura Live Hano - Kigali | 📞 0734 311 635 | Delivery Yihuta 🛵</p>
 </header>
-<div class="search"><input placeholder="🔍 Shaka ibicuruzwa..."></div>
-<div class="grid">
-<div class="card"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"><div><h3>Imboga Fresh</h3><div class="price">2,000 RWF</div><a class="btn" href="https://wa.me/250734311635?text=Nshaka%20kugura%20Imboga%20Fresh">Gura kuri WhatsApp</a></div></div>
-<div class="card"><img src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400"><div><h3>Apple Fresh</h3><div class="price">1,500 RWF</div><a class="btn" href="https://wa.me/250734311635?text=Nshaka%20kugura%20Apple%20Fresh">Gura kuri WhatsApp</a></div></div>
-<div class="card"><img src="https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400"><div><h3>Amata Meza</h3><div class="price">1,200 RWF</div><a class="btn" href="https://wa.me/250734311635?text=Nshaka%20kugura%20Amata%20Meza">Gura kuri WhatsApp</a></div></div>
-<div class="card"><img src="https://images.unsplash.com/photo-1588964895597-cfccd6e2dbf9?w=400"><div><h3>Umugati</h3><div class="price">1,000 RWF</div><a class="btn" href="https://wa.me/250734311635?text=Nshaka%20kugura%20Umugati">Gura kuri WhatsApp</a></div></div>
+<div class="search"><input id="searchInput" oninput="render()" placeholder="🔍 Shaka ibicuruzwa..."></div>
+<div class="cats" id="cats"></div>
+<div class="info">🎉 <b>Promotion:</b> Uguze hejuru ya 10,000 RWF, Delivery ni <b>UBUNTU</b> muri Kigali! | 💳 Kwishyura: <b>MoMo / Cash</b></div>
+<div class="grid" id="grid"></div>
+
+<div class="bottom">
+<button onclick="showHome()"><b>🏠</b>Ahabanza</button>
+<button onclick="openModal('addModal')"><b>➕</b>Ongeraho</button>
+<button onclick="openModal('cartModal')"><b>🛒</b>Igitebo <span class="badge" id="cartCount">0</span></button>
+<button onclick="openModal('sellerModal')"><b>🏪</b>Umucuruzi</button>
 </div>
-<footer>© 2026 SHEMA MARKET - Kigali | 0734 311 635</footer>
-</body>
-</html>
+
+<!-- ACCOUNT -->
+<div class="modal" id="accountModal"><div class="sheet"><button class="close" onclick="closeModal('accountModal')">✕</button><h2>👤 Account Yanjye</h2><div id="accountView"></div><input id="accName" placeholder="Izina ryawe"><input id="accPhone" placeholder="Numero yawe - 0734..."><input id="accLoc" placeholder="Aho utuye - Kimironko, Nyamirambo..."><button class="btn btn2" onclick="saveAccount()">Fungura Account / Injira</button><p style="font-size:12px;color:#888;margin-top:8px">Account yawe ibikwa muri telephone yawe gusa. Nta password ikenewe.</p></div></div>
+
+<!-- ADD PRODUCT -->
+<div class="modal" id="addModal"><div class="sheet"><button class="close" onclick="closeModal('addModal')">✕</button><h2>➕ Ongeraho Igicuruzwa</h2><input id="pName" placeholder="Izina - urugero: Ibirayi"><input id="pPrice" type="number" placeholder="Igiciro - 2000"><select id="pCat"><option>Imboga</option><option>Imbuto</option><option>Amata & Amagi</option><option>Umugati</option><option>Ibindi</option></select><input id="pImg" placeholder="Link y'ifoto (optional)"><input id="pPhone" placeholder="Numero yawe ya MoMo / WhatsApp"><textarea id="pDesc" placeholder="Sobanura - Fresh, 1kg..."></textarea><button class="btn btn2" onclick="addProduct()">Ohereza Igicuruzwa ✅</button><p style="font-size:12px;color:#888;margin-top:6px">Niba nta foto, tuzagushyiriraho ifoto nziza automatique.</p></div></div>
+
+<!-- CART -->
+<div class="modal" id="cartModal"><div class="sheet"><button class="close" onclick="closeModal('cartModal')">✕</button><h2>🛒 Igitebo Cyanjye</h2><div id="cartList"></div><div id="cartTotal" style="font-weight:bold;font-size:18px;margin:10px 0"></div><select id="delivery"><option value="0">🏠 Delivery Kigali - 1,000 RWF (Ubuntu niba >10,000)</option><option value="2000">🛵 Delivery Yihuta - 2,000 RWF</option><option value="0">🏃 Kuzifata - Ubuntu</option></select><div class="momo">💳 <b>ISHYURA NA MoMo</b><br>Ohereza kuri:<br><b>0734 311 635 - SHEMA MARKET</b><br><button class="btn btn3" onclick="copyMoMo()">Kopya Numero ya MoMo</button></div><button class="btn" onclick="checkout()">✅ Ohereza Order kuri WhatsApp</button></div></div>
+
+<!-- SELLER -->
+<div class="modal" id="sellerModal"><div class="sheet"><button class="close" onclick="closeModal('sellerModal')">✕</button><h2>🏪 Dashboard y'Umucuruzi</h2><div id="sellerView"></div><button class="btn btn2" onclick="closeModal('sellerModal');openModal('addModal')">➕ Ongeraho Igicuruzwa Gishya</button></div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let defaultProducts=[
+{name:"Imboga Fresh",price:2000,cat:"Imboga",img:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400",stars:"⭐⭐⭐⭐⭐",seller:"Shema"},
+{name:"Apple Fresh",price:1500,cat:"Imbuto",img:"https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400",stars:"⭐⭐⭐⭐",seller:"Shema"},
+{name:"Amata Meza",price:1200,cat:"Amata & Amagi",img:"https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400",stars:"⭐⭐⭐⭐⭐",seller:"Shema"},
+{name:"Umugati",price:1000,cat:"Umugati",img:"https://images.unsplash.com/photo-1588964895597-cfccd6e2dbf9?w=400",stars:"⭐⭐⭐⭐",seller:"Shema"},
+{name:"Ibirayi",price:2500,cat:"Imboga",img:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400",stars:"⭐⭐⭐⭐⭐",seller:"Shema"},
+{name:"Amagi",price:3000,cat:"Amata & Amagi",img:"https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400",stars:"⭐⭐⭐⭐",seller:"Shema"},
+];
+let products=JSON.parse(localStorage.getItem('shema_products')||'null')||defaultProducts;
+let cart=JSON.parse(localStorage.getItem('shema_cart')||'[]');
+let favs=JSON.parse(localStorage.getItem('shema_favs')||'[]');
+let user=JSON.parse(localStorage.getItem('shema_user')||'null');
+let activeCat="Byose";
+let cats=["Byose","Imboga","Imbuto","Amata & Amagi","Umugati","Ibindi","❤️ Ibyo Nkunda"];
+function showToast(t){let el=document.getElementById('toast');el.innerText=t;el.style.display='block';setTimeout(()=>el.style.display='none',2000)}
+function openModal(id){document.getElementById(id).classList.add('open');if(id=='accountModal')renderAccount();if(id=='cartModal')renderCart();if(id=='sellerModal')renderSeller()}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+function renderCats(){document.getElementById('cats').innerHTML=cats.map(c=>`<button class="${c==activeCat?'active':''}" onclick="activeCat='${c}';render()">${c}</button>`).join('')}
+function render(){
+renderCats();
+let q=(document.getElementById('searchInput').value||'').toLowerCase();
+let list=products.filter(p=>{
+if(activeCat=="❤️ Ibyo Nkunda") return favs.includes(p.name);
+if(activeCat!="Byose" && p.cat!=activeCat) return false;
+if(q && !p.name.toLowerCase().includes(q)) return false;
+return true;
+});
+document.getElementById('grid').innerHTML=list.map((p,i)=>`
+<div class="card">
+<button class="fav" onclick="toggleFav('${p.name}')">${favs.includes(p.name)?'❤️':'🤍'}</button>
+<img src="${p.img}">
+<div class="in"><div class="cat">${p.cat} • ${p.seller||'Shema'}</div><h3>${p.name}</h3><div class="stars">${p.stars}</div><div class="price">${p.price.toLocaleString()} RWF</div>
+<button class="btn btn2" onclick="addToCart(${products.indexOf(p)})">🛒 Shyira mu Gitebo</button>
+<a class="btn" href="https://wa.me/250734311635?text=Nshaka%20kugura%20${encodeURIComponent(p.name)}%20-${p.price}RWF">Gura kuri WhatsApp</a></div></div>`).join('')||'<p style="padding:20px">Nta gicuruzwa kibonetse 😔 Gerageza irindi zina.</p>';
+document.getElementById('cartCount').innerText=cart.length;
+if(user) document.getElementById('userName').innerText=user.name.split(' ')[0];
+}
+function toggleFav(n){favs.includes(n)?favs=favs.filter(x=>x!=n):favs.push(n);localStorage.setItem('shema_favs',JSON.stringify(favs));render();showToast(favs.includes(n)?'❤️ Wabishyize mu byo ukunda':'Wabikuye mu byo ukunda')}
+function addToCart(idx){cart.push(products[idx]);localStorage.setItem('shema_cart',JSON.stringify(cart));render();showToast('✅ Wabishyize mu gitebo!')}
+function renderCart(){
+let total=cart.reduce((s,p)=>s+p.price,0);
+document.getElementById('cartList').innerHTML=cart.map((p,i)=>`<div class="cartItem"><img src="${p.img}"><div style="flex:1"><b>${p.name}</b><br>${p.price.toLocaleString()} RWF</div><button onclick="removeCart(${i})" style="border:none;background:#ffe0e0;padding:6px 10px;border-radius:8px">🗑️</button></div>`).join('')||'Igitebo cyawe kirimo ubusa. Ongeraho ibicuruzwa!';
+let del=parseInt(document.getElementById('delivery')?.value||0);
+if(total>=10000) del=0;
+document.getElementById('cartTotal').innerText=`Total: ${(total+del).toLocaleString()} RWF ${total>=10000?'(Delivery Ubuntu 🎉)':''}`;
+}
+function removeCart(i){cart.splice(i,1);localStorage.setItem('shema_cart',JSON.stringify(cart));renderCart();render()}
+function copyMoMo(){navigator.clipboard.writeText('0734311635');showToast('📋 Numero ya MoMo yakopywe!')}
+function checkout(){
+if(cart.length==0){showToast('Igitebo kirimo ubusa!');return}
+let total=cart.reduce((s,p)=>s+p.price,0);
+let msg=`Mwaramutse SHEMA MARKET! 🛒%0A%0AN
