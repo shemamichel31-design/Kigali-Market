@@ -53,26 +53,27 @@ header{display:flex;justify-content:space-between;align-items:center;background:
 <body>
 <header>
 <div class="logo"><div class="logo-icon">🛒</div><div><b>SHEMA<span> MARKET</span></b><br><small>GURA LIVE • SHEMA</small></div></div>
-<div><button class="btn" onclick="askPIN('add')">+ Ongeraho</button> <button class="cartbtn" onclick="openCart()">🛒 (<span id="count">0</span>)</button></div>
+<div><button class="btn" onclick="openAdd()">+ Ongeraho</button> <button class="cartbtn" onclick="openCart()">🛒 (<span id="count">0</span>)</button></div>
 </header>
-<div style="text-align:right;margin-top:6px"><span class="admin-badge">🔐 ADMIN: SHEMA GUSA</span></div>
+<div style="text-align:right;margin-top:6px"><span class="admin-badge">🔐 GUSIBA: ADMIN GUSA</span></div>
 <div id="offlineBar" class="offline-bar">📵 OFFLINE - Nta internet! Ariko site irakora, ibicuruzwa byose birahari.</div>
 <div id="onlineBar" class="online-bar">✅ ONLINE - Internet yaragarutse!</div>
 <div class="ads">🔥 SHEMA MARKET - BLACK FRIDAY 30% OFF!<small>Hoverboard 450,000 gusa! • Kwamamaza hano: 0734311635</small></div>
 <div class="livebar"><span><span class="live-dot">● LIVE</span> <span id="viewers">128</span> bari kureba</span><span>📦 Orders: <b>14</b> • <span id="netStatus">🟢 Online</span></span></div>
 <input class="search" id="search" placeholder="🔍 Shaka muri Shema Market..." oninput="render()">
 <div class="grid" id="grid"></div>
-<div class="offline-note">📱 SHEMA MARKET ikora n'iyo internet igiye! 🔐 Gusa Admin (Shema) niwe ushobora kongeraho no gusiba.</div>
+<div class="offline-note">📱 Umuntu wese ashobora kongeraho igicuruzwa. 🔐 Gusiba ni Admin (Shema) gusa - PIN 2030.</div>
 <div class="modal" id="pinModal"><div class="box">
-<h2 style="text-align:center">🔐 PIN ya Admin</h2>
-<p style="text-align:center;color:#aaa;font-size:13px">Ni Admin (Shema) gusa wemerewe. Shyiramo PIN.</p>
+<h2 style="text-align:center">🔐 PIN ya Admin - Gusiba</h2>
+<p style="text-align:center;color:#aaa;font-size:13px">Gusiba ni Admin (Shema) gusa. Shyiramo PIN.</p>
 <input id="pinInput" class="pin-input" type="password" inputmode="numeric" maxlength="6" placeholder="••••">
-<button class="save" onclick="checkPIN()">✅ Fungura</button>
+<button class="save" onclick="checkPIN()">✅ Fungura - Siba</button>
 <button class="close" onclick="closeAll()">Funga</button>
 <p id="pinError" style="color:#ff3b30;text-align:center;font-size:13px;display:none">❌ PIN siyo! Gerageza nanone.</p>
 </div></div>
 <div class="modal" id="addModal"><div class="box">
-<h2>+ Ongeraho - Admin Shema</h2>
+<h2>+ Ongeraho Igicuruzwa</h2>
+<p style="color:#aaa;font-size:13px">Umuntu wese yemerewe kongeraho.</p>
 <input id="pName" placeholder="Izina - urugero: Hoverboard">
 <input id="pPrice" type="number" placeholder="Igiciro - 450000">
 <input id="pOld" type="number" placeholder="Igiciro cya kera (optional)">
@@ -105,7 +106,7 @@ let products=[
 {name:"Inkweto Nziza - Nike Style",price:25000,old:35000,img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80",video:"",desc:"Inkweto nziza, zikomeye. Shema Market."},
 {name:"Isaha Nziza",price:30000,old:45000,img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80",video:"",desc:"Isaha igezweho. Shema Market."}
 ];
-let cart=[]; let tempImg="", tempVideo="", pendingAction="", pendingDeleteIdx=-1;
+let cart=[]; let tempImg="", tempVideo="", pendingDeleteIdx=-1;
 try{let s=localStorage.getItem('shema_products'); if(s) products=JSON.parse(s); let c=localStorage.getItem('shema_cart'); if(c) cart=JSON.parse(c);}catch(e){}
 function save(){try{localStorage.setItem('shema_products',JSON.stringify(products));localStorage.setItem('shema_cart',JSON.stringify(cart));}catch(e){alert('Ifoto/Video nini cyane!');}}
 function fmt(n){return n.toLocaleString('en-US')+" RWF"}
@@ -113,15 +114,16 @@ function previewImg(input){let f=input.files[0]; if(!f) return; let r=new FileRe
 function previewVideo(input){let f=input.files[0]; if(!f) return; let v=document.createElement('video'); v.preload='metadata'; v.onloadedmetadata=()=>{window.URL.revokeObjectURL(v.src); if(v.duration>125){alert('Video irengeje 2 min!'); input.value=''; return;} let r=new FileReader(); r.onload=e=>{tempVideo=e.target.result; let pv=document.getElementById('videoPreview'); pv.src=tempVideo; pv.style.display='block';}; r.readAsDataURL(f);}; v.src=URL.createObjectURL(f);}
 function updateNet(){let online=navigator.onLine; document.getElementById('offlineBar').classList.toggle('show',!online); document.getElementById('netStatus').innerText=online?'🟢 Online':'🔴 Offline'; document.getElementById('offlineCartMsg').style.display=online?'none':'block'; if(online){let ob=document.getElementById('onlineBar'); ob.classList.add('show'); setTimeout(()=>ob.classList.remove('show'),3000);}}
 window.addEventListener('online',updateNet); window.addEventListener('offline',updateNet);
-function askPIN(action, idx){pendingAction=action; pendingDeleteIdx=idx; document.getElementById('pinInput').value=''; document.getElementById('pinError').style.display='none'; document.getElementById('pinModal').classList.add('open'); setTimeout(()=>document.getElementById('pinInput').focus(),100);}
-function checkPIN(){let pin=document.getElementById('pinInput').value; if(pin===ADMIN_PIN){document.getElementById('pinModal').classList.remove('open'); if(pendingAction==='add'){document.getElementById('addModal').classList.add('open');} else if(pendingAction==='delete'){if(confirm('Usibe burundu?')){products.splice(pendingDeleteIdx,1); save(); render();}}} else {document.getElementById('pinError').style.display='block'; document.getElementById('pinInput').value='';}}
-function render(){let q=(document.getElementById('search').value||'').toLowerCase(); let g=document.getElementById('grid'); g.innerHTML=''; products.forEach((p,i)=>{if(q && !p.name.toLowerCase().includes(q)) return; let media=p.video?`<video src="${p.video}" controls playsinline poster="${p.img}"></video>`:`<img src="${p.img}" onerror="this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80'">`; let d=document.createElement('div'); d.className='card'; d.innerHTML=media+`<div class="info"><h3>${p.name}</h3><div><span class="price">${fmt(p.price)}</span> ${p.old?`<span class="old">${fmt(p.old)}</span>`:''}</div><p class="desc">${p.desc||''}</p><button class="add" onclick="addCart(${i})">+ Add to Cart</button><a class="wa" href="https://wa.me/${WA}?text=${encodeURIComponent('Nshaka '+p.name+' muri Shema Market - '+fmt(p.price))}" target="_blank">Buy via WhatsApp</a><button class="del" onclick="askPIN('delete',${i})">🗑️ Siba (Admin gusa)</button></div>`; g.appendChild(d);}); document.getElementById('count').innerText=cart.reduce((s,c)=>s+c.qty,0);}
+function openAdd(){document.getElementById('addModal').classList.add('open');}
+function askPINDelete(idx){pendingDeleteIdx=idx; document.getElementById('pinInput').value=''; document.getElementById('pinError').style.display='none'; document.getElementById('pinModal').classList.add('open'); setTimeout(()=>document.getElementById('pinInput').focus(),100);}
+function checkPIN(){let pin=document.getElementById('pinInput').value; if(pin===ADMIN_PIN){document.getElementById('pinModal').classList.remove('open'); if(confirm('Usibe burundu?')){products.splice(pendingDeleteIdx,1); save(); render();}} else {document.getElementById('pinError').style.display='block'; document.getElementById('pinInput').value='';}}
+function render(){let q=(document.getElementById('search').value||'').toLowerCase(); let g=document.getElementById('grid'); g.innerHTML=''; products.forEach((p,i)=>{if(q && !p.name.toLowerCase().includes(q)) return; let media=p.video?`<video src="${p.video}" controls playsinline poster="${p.img}"></video>`:`<img src="${p.img}" onerror="this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80'">`; let d=document.createElement('div'); d.className='card'; d.innerHTML=media+`<div class="info"><h3>${p.name}</h3><div><span class="price">${fmt(p.price)}</span> ${p.old?`<span class="old">${fmt(p.old)}</span>`:''}</div><p class="desc">${p.desc||''}</p><button class="add" onclick="addCart(${i})">+ Add to Cart</button><a class="wa" href="https://wa.me/${WA}?text=${encodeURIComponent('Nshaka '+p.name+' muri Shema Market - '+fmt(p.price))}" target="_blank">Buy via WhatsApp</a><button class="del" onclick="askPINDelete(${i})">🗑️ Siba (Admin gusa)</button></div>`; g.appendChild(d);}); document.getElementById('count').innerText=cart.reduce((s,c)=>s+c.qty,0);}
 function addCart(i){let f=cart.find(c=>c.idx===i); if(f) f.qty++; else cart.push({idx:i,qty:1}); save(); render(); alert('✅ Ongerewe muri Shema Market!'); openCart();}
 function openCart(){let list=document.getElementById('cartList'); let total=0; if(!cart.length){list.innerHTML='<p style="color:#aaa;text-align:center;padding:20px">Cart irimo ubusa.</p>'; document.getElementById('cartTotal').innerText=''; document.getElementById('checkoutBtn').style.display='none';} else{let html=''; let msg='Nshaka gutumiza muri SHEMA MARKET:\n'; cart.forEach((c,ci)=>{let p=products[c.idx]; if(!p) return; let sub=p.price*c.qty; total+=sub; msg+=`- ${p.name} x${c.qty} = ${fmt(sub)}\n`; html+=`<div class="cart-item"><img src="${p.img}"><div style="flex:1"><b>${p.name}</b><br>${fmt(p.price)}<div class="qty"><button onclick="changeQty(${ci},-1)">-</button> ${c.qty} <button onclick="changeQty(${ci},1)">+</button></div></div><b>${fmt(sub)}</b></div>`;}); list.innerHTML=html; document.getElementById('cartTotal').innerText='TOTAL: '+fmt(total); let b=document.getElementById('checkoutBtn'); b.style.display='block'; if(!navigator.onLine){b.style.opacity='0.5'; b.innerText='📵 Uri Offline - Tegereza internet';} else {b.style.opacity='1'; b.innerText='✅ Ohereza Order Yose kuri WhatsApp';} b.href='https://wa.me/'+WA+'?text='+encodeURIComponent(msg+'\nTotal: '+fmt(total));} document.getElementById('cartModal').classList.add('open'); updateNet();}
 function changeQty(ci,d){cart[ci].qty+=d; if(cart[ci].qty<=0) cart.splice(ci,1); save(); render(); openCart();}
 function clearCart(){cart=[]; save(); render(); openCart();}
 function closeAll(){document.querySelectorAll('.modal').forEach(m=>m.classList.remove('open'));}
-function saveProduct(){let n=document.getElementById('pName').value.trim(); let pr=parseInt(document.getElementById('pPrice').value); if(!n||!pr){alert('Shyiramo izina n\'igiciro!'); return;} let img=tempImg||document.getElementById('pImg').value.trim()||'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80'; products.unshift({name:n,price:pr,old:parseInt(document.getElementById('pOld').value)||0,img:img,video:tempVideo||"",desc:document.getElementById('pDesc').value||'Free Delivery - Shema Market'}); save(); render(); closeAll(); alert('✅ Cyongeweho! Admin Shema gusa.'); tempImg=""; tempVideo=""; document.getElementById('pName').value='';document.getElementById('pPrice').value='';document.getElementById('pOld').value='';document.getElementById('pImg').value='';document.getElementById('pDesc').value='';document.getElementById('pImgFile').value='';document.getElementById('pVideoFile').value='';document.getElementById('imgPreview').style.display='none';document.getElementById('videoPreview').style.display='none';}
+function saveProduct(){let n=document.getElementById('pName').value.trim(); let pr=parseInt(document.getElementById('pPrice').value); if(!n||!pr){alert('Shyiramo izina n\'igiciro!'); return;} let img=tempImg||document.getElementById('pImg').value.trim()||'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80'; products.unshift({name:n,price:pr,old:parseInt(document.getElementById('pOld').value)||0,img:img,video:tempVideo||"",desc:document.getElementById('pDesc').value||'Free Delivery - Shema Market'}); save(); render(); closeAll(); alert('✅ Cyongeweho!'); tempImg=""; tempVideo=""; document.getElementById('pName').value='';document.getElementById('pPrice').value='';document.getElementById('pOld').value='';document.getElementById('pImg').value='';document.getElementById('pDesc').value='';document.getElementById('pImgFile').value='';document.getElementById('pVideoFile').value='';document.getElementById('imgPreview').style.display='none';document.getElementById('videoPreview').style.display='none';}
 setInterval(()=>{document.getElementById('viewers').innerText=120+Math.floor(Math.random()*40);},3000);
 updateNet(); render();
 </script>
