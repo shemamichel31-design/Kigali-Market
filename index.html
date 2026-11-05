@@ -1,19 +1,100 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SHEMA MARKET</title><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#f0f2f5;font-family:Arial;padding-bottom:80px}header{background:#1e6bff;color:#fff;padding:14px}.top{display:flex;justify-content:space-between}.top button{background:#fff;color:#1e6bff;border:none;padding:8px 12px;border-radius:20px;font-weight:bold}.lang{display:flex;gap:5px;justify-content:center;padding:8px;background:#fff}.lang button{padding:6px 10px;border:1px solid #ddd;border-radius:15px}.lang button.on{background:#1e6bff;color:#fff}.live{background:red;color:#fff;padding:10px;text-align:center;font-weight:bold}.sr{padding:12px;background:#fff}.sr input{width:100%;padding:12px;border:1px solid #ddd;border-radius:25px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}.card{background:#fff;border-radius:12px;overflow:hidden}.card img{width:100%;height:130px;object-fit:cover}.in{padding:10px}.pr{color:#1e6bff;font-weight:bold}.btn{display:block;background:#25D366;color:#fff;text-align:center;padding:9px;border-radius:8px;margin-top:6px;border:none;width:100%}.btn2{display:block;background:#1e6bff;color:#fff;text-align:center;padding:9px;border-radius:8px;margin-top:5px;border:none;width:100%}.cart{position:fixed;bottom:0;left:0;right:0;background:#111;color:#fff;padding:12px;display:flex;justify-content:space-between}.cart button{background:#25D366;color:#fff;border:none;padding:9px 15px;border-radius:20px}.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;align-items:center;justify-content:center;padding:20px}.mo.open{display:flex}.bx{background:#fff;width:100%;max-width:360px;border-radius:14px;padding:20px}.bx input{width:100%;padding:11px;border:1px solid #ddd;border-radius:10px;margin-bottom:9px}.bx .mn{background:#1e6bff;color:#fff;border:none;padding:12px;border-radius:10px;width:100%;font-weight:bold}</style></head><body>
-<header><div class="top"><h1>SHEMA MARKET</h1><button onclick="oL()">Login</button></div><p data-t="sub">Fresh - Fast - Affordable</p></header>
-<div class="lang"><button data-l="en" class="on" onclick="setL('en')">English</button><button data-l="rw" onclick="setL('rw')">Kinyarwanda</button><button data-l="fr" onclick="setL('fr')">Francais</button><button data-l="sw" onclick="setL('sw')">Kiswahili</button></div>
-<div class="live">LIVE NOW - <span id="v">128</span> <span data-t="w">watching</span></div>
-<div class="sr"><input id="q" placeholder="Search..." oninput="fil()"></div>
-<div class="grid" id="g"></div>
-<div class="cart"><span>Cart: <b id="c">0</b> - <b id="t">0 RWF</b></span><button onclick="co()">Checkout</button></div>
-<div id="m" class="mo"><div class="bx"><button style="float:right;border:none;background:none;font-size:20px" onclick="cL()">X</button><h2 data-t="wel">Welcome to SHEMA MARKET</h2><p data-t="ls">Login or Sign Up</p><input id="nm" placeholder="Your Name"><input id="em" placeholder="Email"><input id="pw" placeholder="Password" type="password"><button class="mn" onclick="au()">Login / Sign Up</button></div></div>
-<script>
-let lang='en',cart=[];const T={en:{sub:"Fresh - Fast - Affordable",w:"watching",wel:"Welcome to SHEMA MARKET",ls:"Login or Sign Up",add:"Add to Cart",ord:"Order on WhatsApp"},rw:{sub:"Fresh - Byihuse - Bihendutse",w:"bari kureba",wel:"Murakaza neza kuri SHEMA MARKET",ls:"Injira cyangwa wiyandikishe",add:"Ongera mu Gare",ord:"Tumiza kuri WhatsApp"},fr:{sub:"Frais - Rapide - Abordable",w:"regardent",wel:"Bienvenue chez SHEMA MARKET",ls:"Connectez-vous",add:"Ajouter au Panier",ord:"Commander sur WhatsApp"},sw:{sub:"Fresh - Haraka - Bei Nafuu",w:"wanaangalia",wel:"Karibu SHEMA MARKET",ls:"Ingia au Jisajili",add:"Weka Kwenye Kikapu",ord:"Agiza kwa WhatsApp"}};
-function setL(l){lang=l;document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.dataset.l==l));document.querySelectorAll('[data-t]').forEach(e=>{e.innerText=T[l][e.dataset.t]});fil()}
-function oL(){document.getElementById('m').classList.add('open')}function cL(){document.getElementById('m').classList.remove('open')}
-function au(){let n=document.getElementById('nm').value||'User',e=document.getElementById('em').value;if(!e)return alert('Enter Email');localStorage.setItem('su',n);cL();alert('Welcome '+n)}
-const P=[["Avocado 5pcs",3000,"photo-1523049673857-eb18f1d7b578"],["Rice 5kg",7500,"photo-1586201375761-83865001e31c"],["Sneakers White",35000,"photo-1542291026-7eec264c27ff"],["Phone Charger",12000,"photo-1583863788434-e58a36330cf0"]];
-function fil(){let q=document.getElementById('q').value.toLowerCase();document.getElementById('g').innerHTML=P.filter(p=>p[0].toLowerCase().includes(q)).map((p,i)=>`<div class="card"><img src="https://images.unsplash.com/${p[2]}?w=400"><div class="in"><b>${p[0]}</b><div class="pr">${p[1]} RWF</div><button class="btn2" onclick="add(${i})">${T[lang].add}</button><a class="btn" style="display:block;text-decoration:none" href="https://wa.me/250734311682?text=Hello SHEMA, I want ${p[0]}">${T[lang].ord}</a></div></div>`).join('')}
-function add(i){if(!localStorage.getItem('su')){oL();return alert('Please Login first')}cart.push(P[i]);document.getElementById('c').innerText=cart.length;document.getElementById('t').innerText=cart.reduce((s,p)=>s+p[1],0)+' RWF'}
-function co(){if(!cart.leng)return alert('Cart empty');location.href='https://wa.me/250734311682?text='+encodeURIComponent('Hello SHEMA, Order: '+cart.map(p=>p[0]).join(', '))}
-fil();setL('en');
-</script></body></html>
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SHEMA MARKET - Kigali</title></head>
+<body style="background:#dcfce7;margin:0;font-family:Arial;padding-bottom:20px">
+
+<div style="background:#16a34a;color:white;padding:20px;text-align:center">
+<h1 style="margin:0">🛒 SHEMA MARKET</h1>
+<p>By Shema Michel • Kigali • GURA LIVE</p>
+
+<details style="background:white;color:#16a34a;border-radius:20px;padding:10px;margin:5px;display:inline-block"><summary style="font-weight:bold;cursor:pointer">👤 Log In Email / Google</summary>
+<div style="padding:10px;text-align:left;color:#000">
+<p><b>Google:</b></p>
+<a href="#grid" style="display:block;background:#fff;border:2px solid #16a34a;color:#000;padding:10px;border-radius:10px;text-align:center;text-decoration:none;font-weight:bold">Continue with Google</a>
+<p><b>Email:</b></p>
+<form action="https://formsubmit.co/Shemamichel31@gmail.com" method="POST">
+<input name="Email" placeholder="Andika Email yawe hano" required style="width:100%;padding:12px;border:2px solid #bbf7d0;border-radius:10px;box-sizing:border-box">
+<button type="submit" style="width:100%;padding:12px;background:#16a34a;color:white;border:none;border-radius:10px;font-weight:bold;margin-top:8px">Log In</button>
+</form>
+</div></details>
+
+<a href="#ongeraho" style="background:#166534;color:white;padding:11px 14px;border:1px solid white;border-radius:20px;font-weight:bold;text-decoration:none;display:inline-block;margin:5px">+ Ongeraho</a>
+<a href="#grid" style="background:white;color:#16a34a;padding:11px 14px;border-radius:20px;font-weight:bold;text-decoration:none;display:inline-block;margin:5px">🛒 Cart / Order</a>
+</div>
+
+<div style="background:#dc2626;color:white;padding:12px;margin:12px;border-radius:12px;text-align:center">
+<b>● LIVE NOW - SHEMA MARKET ARI LIVE!</b><br>128 bari kureba • Orders: 14 • Ibiciro bya Live gusa!
+<div style="background:white;color:#000;border-radius:10px;padding:12px;margin-top:10px;text-align:left">
+<b>🔥 Ubu muri Live:</b><br>
+- Hoverboard 450,000 gusa - aho 600,000<br>
+- Inkweto 25,000 - 2 zisigaye gusa<br>
+- Rice 5kg - 7,500<br>
+<span style="font-size:12px;color:#64748b">Shema Michel aravuga: "Ndi Live ubu, andikira order yawe hasi, ndakuyemeza ako kanya!"</span>
+</div>
+</div>
+
+<div style="background:white;padding:10px;margin:0 12px;border-radius:10px;font-size:13px">🔔 <b>Live Orders - Ubu:</b><br>• Jean - yaguze Hoverboard - <b style="color:#16a34a">YEMEJWE ✅</b><br>• Marie - yaguze Inkweto - <b style="color:#16a34a">YEMEJWE ✅</b><br>• Alice - yaguze Rice - <b style="color:#f59e0b">ITEGEJE... ⏳</b></div>
+
+<div style="background:#16a34a;color:white;padding:12px;margin:12px;border-radius:12px;text-align:center;font-weight:bold">🔥 BLACK FRIDAY 30% OFF! Hoverboard 450,000 gusa! - SHEMA MARKET</div>
+
+<input placeholder="🔍 Shaka..." style="width:calc(100% - 24px);margin:0 12px;padding:13px;border-radius:12px;border:2px solid #16a34a;box-sizing:border-box">
+
+<div style="display:flex;gap:8px;overflow:auto;padding:12px">
+<a href="#grid" style="padding:8px 14px;border-radius:20px;background:#16a34a;color:white;font-weight:bold;text-decoration:none">All</a>
+<a href="#food" style="padding:8px 14px;border-radius:20px;background:white;color:#16a34a;font-weight:bold;text-decoration:none">Food</a>
+<a href="#drinks" style="padding:8px 14px;border-radius:20px;background:white;color:#16a34a;font-weight:bold;text-decoration:none">Drinks</a>
+<a href="#cleaning" style="padding:8px 14px;border-radius:20px;background:white;color:#16a34a;font-weight:bold;text-decoration:none">Cleaning</a>
+<a href="#oils" style="padding:8px 14px;border-radius:20px;background:white;color:#16a34a;font-weight:bold;text-decoration:none">Oils</a>
+<a href="#others" style="padding:8px 14px;border-radius:20px;background:white;color:#16a34a;font-weight:bold;text-decoration:none">Others / Clothes</a>
+</div>
+
+<div id="grid" style="padding:0 12px">
+
+<div id="others" style="background:white;padding:15px;border-radius:12px;margin-bottom:12px"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600" style="width:100%;height:200px;object-fit:cover;border-radius:10px"><h3>Hoverboard Blue</h3><p style="color:#16a34a;font-weight:bold">450,000 RWF <span style="color:#94a3b8;text-decoration:line-through;font-size:13px">600,000</span></p><p style="font-size:12px;color:#64748b">Free Delivery • Others</p><a href="#order" style="display:block;background:#16a34a;color:white;padding:12px;border-radius:10px;text-align:center;text-decoration:none;font-weight:bold">🛒 GURA UBU - LIVE</a><details style="margin-top:8px"><summary style="color:#ef4444;font-size:13px;cursor:pointer">🗑️ Siba (Admin - Shema Michel gusa)</summary><p style="font-size:13px">Kugirango usibe, siba iyi bloc muri code.</p></details></div>
+
+<div style="background:white;padding:15px;border-radius:12px;margin-bottom:12px"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600" style="width:100%;height:200px;object-fit:cover;border-radius:10px"><h3>Inkweto Nziza</h3><p style="color:#16a34a;font-weight:bold">25,000 RWF</p><a href="#order" style="display:block;background:#16a34a;color:white;padding:12px;border-radius:10px;text-align:center;text-decoration:none;font-weight:bold">🛒 GURA UBU - LIVE</a></div>
+
+<div id="food" style="background:white;padding:15px;border-radius:12px;margin-bottom:12px"><img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600" style="width:100%;height:200px;object-fit:cover;border-radius:10px"><h3>Rice 5kg</h3><p style="color:#16a34a;font-weight:bold">7,500 RWF</p><a href="#order" style="display:block;background:#16a34a;color:white;padding:12px;border-radius:10px;text-align:center;text-decoration:none;font-weight:bold">🛒 GURA UBU - LIVE</a></div>
+
+<div id="oils" style="background:white;padding:15px;border-radius:12px;margin-bottom:12px"><img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=600" style="width:100%;height:200px;object-fit:cover;border-radius:10px"><h3>Cooking Oil 5L</h3><p style="color:#16a34a;font-weight:bold">9,000 RWF</p><a href="#order" style="display:block;background:#16a34a;color:white;padding:12px;border-radius:10px;text-align:center;text-decoration:none;font-weight:bold">🛒 GURA UBU - LIVE</a></div>
+
+<div id="cleaning" style="background:white;padding:15px;border-radius:12px;margin-bottom:12px"><img src="https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?w=600" style="width:100%;height:200px;object-fit:cover;border-radius:10px"><h3>Soap</h3><p style="color:#16a34a;font-weight:bold">1,500 RWF</p><a href="#order" style="display:block;background:#16a34a;color:white;padding:12px;border-radius:10px;text-align:center;text-decoration:none;font-weight:bold">🛒 GURA UBU - LIVE</a></div>
+
+<div style="background:white;padding:15px;border-radius:12px;margin-bottom:12px"><img src="https://images.unsplash.com/photo-1581441363689-1f3c3c414635?w=600" style="width:100%;height:200px;object-fit:cover;border-radius:10px"><h3>Sugar 2kg</h3><p style="color:#16a34a;font-weight:bold">3,000 RWF</p><a href="#order" style="display:block;background:#16a34a;color:white;padding:12px;border-radius:10px;text-align:center;text-decoration:none;font-weight:bold">🛒 GURA UBU - LIVE</a></div>
+
+<div id="drinks" style="background:white;padding:15px;border-radius:12px;margin-bottom:12px"><img src="https://images.unsplash.com/photo-1554866585-cd94860890b7?w=600" style="width:100%;height:200px;object-fit:cover;border-radius:10px"><h3>Coca-Cola</h3><p style="color:#16a34a;font-weight:bold">1,000 RWF</p><a href="#order" style="display:block;background:#16a34a;color:white;padding:12px;border-radius:10px;text-align:center;text-decoration:none;font-weight:bold">🛒 GURA UBU - LIVE</a></div>
+
+<div style="background:white;padding:15px;border-radius:12px;margin-bottom:12px"><img src="https://images.unsplash.com/photo-1550583724-b2692b85b150?w=600" style="width:100%;height:200px;object-fit:cover;border-radius:10px"><h3>Milk 1L</h3><p style="color:#16a34a;font-weight:bold">2,000 RWF</p><a href="#order" style="display:block;background:#16a34a;color:white;padding:12px;border-radius:10px;text-align:center;text-decoration:none;font-weight:bold">🛒 GURA UBU - LIVE</a></div>
+
+<div style="background:white;padding:15px;border-radius:12px;margin-bottom:12px"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600" style="width:100%;height:200px;object-fit:cover;border-radius:10px"><h3>Bread</h3><p style="color:#16a34a;font-weight:bold">1,500 RWF</p><a href="#order" style="display:block;background:#16a34a;color:white;padding:12px;border-radius:10px;text-align:center;text-decoration:none;font-weight:bold">🛒 GURA UBU - LIVE</a></div>
+
+<div style="background:white;padding:15px;border-radius:12px;margin-bottom:12px"><img src="https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=600" style="width:100%;height:200px;object-fit:cover;border-radius:10px"><h3>Eggs Tray</h3><p style="color:#16a34a;font-weight:bold">4,500 RWF</p><a href="#order" style="display:block;background:#16a34a;color:white;padding:12px;border-radius:10px;text-align:center;text-decoration:none;font-weight:bold">🛒 GURA UBU - LIVE</a></div>
+
+</div>
+
+<div id="order" style="background:white;margin:0 12px;padding:15px;border-radius:12px">
+<h3 style="color:#16a34a">🛒 Gura Ubu - Kuri Site</h3>
+<form action="https://formsubmit.co/Shemamichel31@gmail.com" method="POST">
+<input type="hidden" name="_subject" value="ORDER Nshya - SHEMA MARKET LIVE">
+<input name="Izina" placeholder="Amazina yawe" required style="width:100%;padding:12px;margin:5px 0;border:2px solid #bbf7d0;border-radius:10px;box-sizing:border-box">
+<input name="Telefone" placeholder="Telefone yawe - 079..." required style="width:100%;padding:12px;margin:5px 0;border:2px solid #bbf7d0;border-radius:10px;box-sizing:border-box">
+<input name="Igicuruzwa" placeholder="Nshaka kugura iki? - Hoverboard" required style="width:100%;padding:12px;margin:5px 0;border:2px solid #bbf7d0;border-radius:10px;box-sizing:border-box">
+<input name="Aderesi" placeholder="Aderesi - Kigali, Kimironko" style="width:100%;padding:12px;margin:5px 0;border:2px solid #bbf7d0;border-radius:10px;box-sizing:border-box">
+<button type="submit" style="width:100%;padding:12px;background:#16a34a;color:white;border:none;border-radius:10px;font-weight:bold">✅ OHEREZA ORDER - KURI SITE</button>
+</form>
+<p style="font-size:12px;color:#64748b">Order iragushyikirizwa kuri Email ya Shema Michel - Shemamichel31@gmail.com</p>
+</div>
+
+<div id="ongeraho" style="background:white;margin:12px;padding:15px;border-radius:12px">
+<h3 style="color:#16a34a">+ Ongeraho Igicuruzwa</h3>
+<form action="https://formsubmit.co/Shemamichel31@gmail.com" method="POST">
+<input name="Izina_ry_igicuruzwa" placeholder="Izina - urugero: Hoverboard" required style="width:100%;padding:12px;margin:5px 0;border:2px solid #bbf7d0;border-radius:10px;box-sizing:border-box">
+<input name="Igiciro" placeholder="Igiciro - 450000" style="width:100%;padding:12px;margin:5px 0;border:2px solid #bbf7d0;border-radius:10px;box-sizing:border-box">
+<textarea name="Sobanura" placeholder="Sobanura + shyiramo link y'ifoto" style="width:100%;padding:12px;margin:5px 0;border:2px solid #bbf7d0;border-radius:10px;box-sizing:border-box"></textarea>
+<button type="submit" style="width:100%;padding:12px;background:#16a34a;color:white;border:none;border-radius:10px;font-weight:bold">✅ Ohereza - Ongeraho</button>
+</form>
+</div>
+
+<p style="text-align:center;font-size:12px;color:#64748b;margin-top:12px">🔐 Gusiba ni Shema Michel gusa • SHEMA MARKET - Kigali • Gura Live Hano</p>
+</body>
+</html>
